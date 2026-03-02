@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-gold: #d4af37; /* Classic Gold */
+  --color-gold-muted: #a68a2d;
+  --color-dark: #0a0a0a;
+  --color-dark-surface: #121212;
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-dark text-white font-sans antialiased selection:bg-gold selection:text-dark overflow-x-hidden;
+  }
+}
+
+/* Cinematic Utilities */
+.glass-panel {
+  @apply bg-glass backdrop-blur-2xl border border-glass-border;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.section-title {
+  @apply font-serif text-4xl md:text-6xl font-medium tracking-tight mb-6;
+}
+
+.sub-label {
+  @apply text-gold uppercase tracking-[0.4em] text-[10px] font-bold mb-4 block;
+}
+
+/* Custom Buttons */
+.btn-luxury {
+  @apply relative px-8 py-4 overflow-hidden transition-all duration-500 border border-gold/30 hover:border-gold;
+}
+
+.btn-luxury::before {
+  content: '';
+  @apply absolute inset-0 bg-gold/10 translate-x-[-100%] transition-transform duration-500 ease-out;
+}
+
+.btn-luxury:hover::before {
+  @apply translate-x-0;
+}
+
+.btn-luxury span {
+  @apply relative z-10 font-bold uppercase tracking-[0.2em] text-[10px] text-gold;
+}
+
+/* Image Hover */
+.img-reveal {
+  @apply relative overflow-hidden;
+}
+
+.img-reveal img {
+  @apply transition-transform duration-1000 ease-out scale-110;
+}
+
+.img-reveal:hover img {
+  @apply scale-100;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-dark;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gold/10 hover:bg-gold/30 transition-colors;
+}
