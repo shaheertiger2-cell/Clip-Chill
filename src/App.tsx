@@ -234,31 +234,99 @@ const Hero = () => {
 };
 
 const Services = () => {
-  const categories = [
-    {
-      title: "Haircuts",
-      items: [
-        { name: "Standard Haircut", price: "$30", time: "30m", description: "A clean, professional cut that fits your style." },
-        { name: "Long Haircut", price: "$35", time: "45m", description: "For longer hair or more detailed styles." },
-        { name: "Kid's Cut", price: "$25", time: "30m", description: "A great haircut experience for kids." },
-        { name: "Senior Cut", price: "$25", time: "30m", description: "Traditional haircuts for seniors." },
-      ]
-    },
-    {
-      title: "Beard & Shaves",
-      items: [
-        { name: "Haircut + Beard", price: "$50", time: "60m", description: "A fresh haircut combined with a professional beard trim." },
-        { name: "Beard Trim", price: "$25", time: "20m", description: "Keep your beard looking sharp and well-maintained." },
-        { name: "Hot Towel Shave", price: "$25", time: "30m", description: "A classic straight-razor shave with a relaxing hot towel." },
-        { name: "Full Package", price: "$110", time: "90m", description: "The full experience: haircut, beard trim, and a hot towel shave." },
-      ]
-    }
+  const services = [
+    { name: "Standard Haircut", price: "$30", time: "30m", description: "A clean, professional cut that fits your style." },
+    { name: "Long Haircut", price: "$35", time: "45m", description: "For longer hair or more detailed styles." },
+    { name: "Kid's Cut", price: "$25", time: "30m", description: "A great haircut experience for kids." },
+    { name: "Senior Cut", price: "$25", time: "30m", description: "Traditional haircuts for seniors." },
+    { name: "Haircut + Beard", price: "$50", time: "60m", description: "A fresh haircut combined with a professional beard trim." },
+    { name: "Beard Trim", price: "$25", time: "20m", description: "Keep your beard looking sharp and well-maintained." },
+    { name: "Hot Towel Shave", price: "$25", time: "30m", description: "A classic straight-razor shave with a relaxing hot towel." },
+    { name: "Clip and Chill Package", price: "$110", time: "90m", description: "The full experience: haircut, beard trim, hot towel shave, facial, and waxing." },
   ];
+
+  const renderServiceItem = (item: typeof services[0], idx: number) => (
+    <motion.div
+      key={item.name}
+      variants={{
+        hidden: {
+          opacity: 0,
+          y: 30,
+          filter: 'blur(10px)',
+          clipPath: 'inset(0 100% 0 0)'
+        },
+        visible: {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          clipPath: 'inset(0 0% 0 0)',
+          transition: {
+            duration: 1.2,
+            ease: [0.16, 1, 0.3, 1],
+            delay: idx * 0.05
+          }
+        }
+      }}
+      whileHover={{ x: 10 }}
+      className="group relative cursor-default"
+    >
+      <div className="flex justify-between items-baseline mb-2">
+        <h4 className="font-serif text-3xl font-medium group-hover:text-gold transition-all duration-700 flex items-center gap-4">
+          <motion.span
+            variants={{
+              hidden: { width: 0 },
+              visible: { width: '2rem', transition: { delay: 0.5 + idx * 0.1, duration: 0.8 } }
+            }}
+            className="h-px bg-gold group-hover:w-12 transition-all duration-700"
+          />
+          {item.name}
+        </h4>
+        <motion.span
+          variants={{
+            hidden: { opacity: 0, x: 10 },
+            visible: { opacity: 0.6, x: 0, transition: { delay: 0.8 + idx * 0.1 } }
+          }}
+          className="font-mono text-gold text-sm group-hover:opacity-100 transition-opacity duration-700"
+        >
+          {item.price}
+        </motion.span>
+      </div>
+
+      <motion.p
+        variants={{
+          hidden: { opacity: 0, y: 10 },
+          visible: { opacity: 1, y: 0, transition: { delay: 0.6 + idx * 0.1 } }
+        }}
+        className="text-white/30 text-xs mb-4 font-light leading-relaxed max-w-sm group-hover:text-white/60 transition-colors duration-700 pl-12"
+      >
+        {item.description}
+      </motion.p>
+
+      <div className="flex items-center gap-4 pl-12">
+        <motion.span
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { delay: 0.9 + idx * 0.1 } }
+          }}
+          className="text-[9px] uppercase tracking-[0.4em] text-white/20 font-bold group-hover:text-gold/40 transition-colors duration-700"
+        >
+          {item.time}
+        </motion.span>
+        <motion.div
+          variants={{
+            hidden: { width: 0 },
+            visible: { width: '6rem', transition: { delay: 1 + idx * 0.1, duration: 1 } }
+          }}
+          className="h-px bg-gradient-to-r from-gold/40 to-transparent transition-all duration-1000 group-hover:w-32"
+        />
+      </div>
+    </motion.div>
+  );
 
   return (
     <section id="services" className="py-24 md:py-40 bg-dark relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
-      
+
       <div className="max-w-7xl mx-auto px-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-32 gap-12">
           <div className="max-w-2xl">
@@ -271,117 +339,33 @@ const Services = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-32">
-          {categories.map((cat, i) => (
-            <motion.div 
-              key={cat.title}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.15 }
-                }
-              }}
-            >
-              <motion.h3 
-                variants={{
-                  hidden: { opacity: 0, x: -30 },
-                  visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } }
-                }}
-                className="text-[11px] uppercase tracking-[0.8em] text-gold/40 font-bold mb-16 flex items-center gap-6"
-              >
-                {cat.title}
-                <motion.div 
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
-                  className="h-px flex-grow bg-gradient-to-r from-gold/20 to-transparent origin-left" 
-                />
-              </motion.h3>
-              
-              <div className="space-y-16">
-                {cat.items.map((item, idx) => (
-                  <motion.div 
-                    key={item.name}
-                    variants={{
-                      hidden: { 
-                        opacity: 0, 
-                        y: 30,
-                        filter: 'blur(10px)',
-                        clipPath: 'inset(0 100% 0 0)'
-                      },
-                      visible: { 
-                        opacity: 1, 
-                        y: 0,
-                        filter: 'blur(0px)',
-                        clipPath: 'inset(0 0% 0 0)',
-                        transition: { 
-                          duration: 1.2, 
-                          ease: [0.16, 1, 0.3, 1],
-                          delay: idx * 0.05 // Extra stagger layer
-                        } 
-                      }
-                    }}
-                    whileHover={{ x: 10 }}
-                    className="group relative cursor-default"
-                  >
-                    <div className="flex justify-between items-baseline mb-2">
-                      <h4 className="font-serif text-3xl font-medium group-hover:text-gold transition-all duration-700 flex items-center gap-4">
-                        <motion.span 
-                          variants={{
-                            hidden: { width: 0 },
-                            visible: { width: '2rem', transition: { delay: 0.5 + idx * 0.1, duration: 0.8 } }
-                          }}
-                          className="h-px bg-gold group-hover:w-12 transition-all duration-700" 
-                        />
-                        {item.name}
-                      </h4>
-                      <motion.span 
-                        variants={{
-                          hidden: { opacity: 0, x: 10 },
-                          visible: { opacity: 0.6, x: 0, transition: { delay: 0.8 + idx * 0.1 } }
-                        }}
-                        className="font-mono text-gold text-sm group-hover:opacity-100 transition-opacity duration-700"
-                      >
-                        {item.price}
-                      </motion.span>
-                    </div>
-                    
-                    <motion.p 
-                      variants={{
-                        hidden: { opacity: 0, y: 10 },
-                        visible: { opacity: 1, y: 0, transition: { delay: 0.6 + idx * 0.1 } }
-                      }}
-                      className="text-white/30 text-xs mb-4 font-light leading-relaxed max-w-sm group-hover:text-white/60 transition-colors duration-700 pl-12"
-                    >
-                      {item.description}
-                    </motion.p>
-                    
-                    <div className="flex items-center gap-4 pl-12">
-                      <motion.span 
-                        variants={{
-                          hidden: { opacity: 0 },
-                          visible: { opacity: 1, transition: { delay: 0.9 + idx * 0.1 } }
-                        }}
-                        className="text-[9px] uppercase tracking-[0.4em] text-white/20 font-bold group-hover:text-gold/40 transition-colors duration-700"
-                      >
-                        {item.time}
-                      </motion.span>
-                      <motion.div 
-                        variants={{
-                          hidden: { width: 0 },
-                          visible: { width: '6rem', transition: { delay: 1 + idx * 0.1, duration: 1 } }
-                        }}
-                        className="h-px bg-gradient-to-r from-gold/40 to-transparent transition-all duration-1000 group-hover:w-32" 
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+            }}
+          >
+            <div className="space-y-16">
+              {services.slice(0, 4).map((item, idx) => renderServiceItem(item, idx))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+            }}
+          >
+            <div className="space-y-16">
+              {services.slice(4).map((item, idx) => renderServiceItem(item, idx))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -584,34 +568,6 @@ const Reviews = () => {
       rating: 5,
       text: "Got a great cut from Ahmad at a great price. The hours are Great too as they work with my hectic schedule. Can't ask for more. On top of that, the place is clean and modern. Will definitely be back soon."
     },
-    {
-      name: "Adeel Farooque",
-      initials: "AF",
-      date: "5 days ago",
-      rating: 5,
-      text: "Great service by Ahmed. The rates are reasonable, service was quick, he understood what I wanted and did it well (even with my poor explanation) and was courteous and polite. Definitely recommended."
-    },
-    {
-      name: "yagmur bahram",
-      initials: "YB",
-      date: "2 weeks ago",
-      rating: 5,
-      text: "I’ve been going to Ahmed for the past 4 months and I couldn’t be happier. His cuts are always top quality very precise, detailed, and consistent every time. What I really appreciate is that he never lets you leave the chair unless you’re fully satisfied with your haircut, which shows how much he cares about his work and his clients."
-    },
-    {
-      name: "shadab alam",
-      initials: "SA",
-      date: "2 weeks ago",
-      rating: 5,
-      text: "Excellent service with edge perfection. Specially my sons most like to come this Barbershop for hear cut. No cry no compliance. Thank you for providing the satisfaction service. Now we are regular client for this awesome barbershop."
-    },
-    {
-      name: "Abdul Sed",
-      initials: "AS",
-      date: "1 week ago",
-      rating: 5,
-      text: "Great and friendly staff"
-    }
   ];
 
   return (
@@ -657,7 +613,7 @@ const Reviews = () => {
           </a>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div className="grid md:grid-cols-2 gap-6 mb-20">
           {reviews.map((review, i) => (
             <motion.div
               key={i}
@@ -743,7 +699,7 @@ const Footer = () => {
             <a href="https://www.facebook.com/profile.php?id=61571956989946" target="_blank" rel="noopener noreferrer" className="text-white/20 hover:text-gold transition-colors"><Facebook size={20} /></a>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12 md:gap-24 w-full pt-24 border-t border-white/5">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-24 w-full pt-24 border-t border-white/5">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -766,19 +722,6 @@ const Footer = () => {
               <div className="space-y-4 text-sm text-white/40 font-light">
                 <p>Mon - Sat: 10:00 - 20:00</p>
                 <p>Sunday: 11:00 - 19:00</p>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <h4 className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold mb-10">Newsletter</h4>
-              <p className="text-white/40 text-sm mb-8 font-light">Join our inner circle for haircut tips.</p>
-              <div className="relative max-w-xs mx-auto">
-                <input type="email" placeholder="Email Address" className="w-full bg-white/5 border border-white/5 px-6 py-4 outline-none focus:border-gold/30 text-sm font-light transition-all" />
-                <button className="absolute right-2 top-2 bottom-2 bg-gold/10 text-gold px-6 font-bold uppercase text-[9px] tracking-widest hover:bg-gold hover:text-dark transition-all">Join</button>
               </div>
             </motion.div>
           </div>
