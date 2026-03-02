@@ -437,19 +437,16 @@ const Team = () => {
     { 
       name: "Clark R.", 
       role: "Senior Barber", 
-      rating: "5.0 ★ (4 Reviews)",
       image: "https://i.postimg.cc/Hs0mC8FD/Clark-R.jpg"
     },
     { 
       name: "Ahmad F.", 
       role: "Senior Barber", 
-      rating: "5.0 ★ (19 Reviews)",
       image: "https://i.postimg.cc/y8vzD4VG/Ahmad_F.jpg"
     },
     { 
       name: "Sido", 
       role: "Senior Barber", 
-      rating: "",
       image: "https://i.postimg.cc/D0LT0SZG/Sido.jpg"
     },
   ];
@@ -511,18 +508,9 @@ const Team = () => {
                     hidden: { opacity: 0, x: -20 },
                     visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  className="text-[10px] uppercase tracking-[0.4em] text-gold/60 font-bold mb-4"
+                  className="text-[10px] uppercase tracking-[0.4em] text-gold/60 font-bold"
                 >
                   {barber.role}
-                </motion.p>
-                <motion.p 
-                  variants={{
-                    hidden: { opacity: 0, x: -20 },
-                    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-                  }}
-                  className="text-[9px] uppercase tracking-[0.2em] text-white/20 font-bold"
-                >
-                  {barber.rating}
                 </motion.p>
               </motion.div>
             </motion.div>
@@ -561,6 +549,174 @@ const MapSection = () => {
           />
           <div className="absolute inset-0 pointer-events-none border border-white/5" />
         </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const Reviews = () => {
+  const reviews = [
+    {
+      name: "Arjun Talwar",
+      initials: "AT",
+      date: "3 hours ago",
+      rating: 5,
+      text: "Amazing saloon!!!!!"
+    },
+    {
+      name: "ali mohamad",
+      initials: "AM",
+      date: "5 hours ago",
+      rating: 5,
+      text: "Amazing barber shop very nice service and very professional"
+    },
+    {
+      name: "Shaikh Nazeef",
+      initials: "SN",
+      date: "3 days ago",
+      rating: 5,
+      text: "Top notch customer service, Hands down the best barber shop in Mississauga !!"
+    },
+    {
+      name: "P Jaswal",
+      initials: "PJ",
+      date: "4 days ago",
+      rating: 5,
+      text: "Got a great cut from Ahmad at a great price. The hours are Great too as they work with my hectic schedule. Can't ask for more. On top of that, the place is clean and modern. Will definitely be back soon."
+    },
+    {
+      name: "Adeel Farooque",
+      initials: "AF",
+      date: "5 days ago",
+      rating: 5,
+      text: "Great service by Ahmed. The rates are reasonable, service was quick, he understood what I wanted and did it well (even with my poor explanation) and was courteous and polite. Definitely recommended."
+    },
+    {
+      name: "yagmur bahram",
+      initials: "YB",
+      date: "2 weeks ago",
+      rating: 5,
+      text: "I’ve been going to Ahmed for the past 4 months and I couldn’t be happier. His cuts are always top quality very precise, detailed, and consistent every time. What I really appreciate is that he never lets you leave the chair unless you’re fully satisfied with your haircut, which shows how much he cares about his work and his clients."
+    },
+    {
+      name: "shadab alam",
+      initials: "SA",
+      date: "2 weeks ago",
+      rating: 5,
+      text: "Excellent service with edge perfection. Specially my sons most like to come this Barbershop for hear cut. No cry no compliance. Thank you for providing the satisfaction service. Now we are regular client for this awesome barbershop."
+    },
+    {
+      name: "Abdul Sed",
+      initials: "AS",
+      date: "1 week ago",
+      rating: 5,
+      text: "Great and friendly staff"
+    }
+  ];
+
+  return (
+    <section id="reviews" className="py-24 md:py-40 bg-[#f8f8f8] text-dark relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="text-center mb-20">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-serif text-4xl md:text-6xl font-medium tracking-tight mb-6 uppercase"
+          >
+            What Our Clients Say
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-dark/60 max-w-2xl mx-auto font-light"
+          >
+            Hear from clients who've experienced the luxury, precision, and service that make Clip & Chill a top choice in Mississauga.
+          </motion.p>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
+          <div className="flex items-center gap-6">
+            <div className="text-5xl md:text-6xl font-serif font-medium">5.00</div>
+            <div>
+              <div className="flex text-gold mb-1">
+                {[...Array(5)].map((_, i) => <Star key={i} size={18} fill="currentColor" stroke="none" />)}
+              </div>
+              <div className="text-[10px] text-dark/40 uppercase tracking-[0.3em] font-bold">884 reviews</div>
+            </div>
+          </div>
+          <a 
+            href="https://www.google.com/search?q=clip+and+chill+barbershop+mississauga+reviews"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-dark text-white px-10 py-5 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-gold hover:text-dark transition-all shadow-xl"
+          >
+            Write a review
+          </a>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          {reviews.map((review, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-white p-8 shadow-sm border border-black/5 flex flex-col h-full"
+            >
+              <div className="flex justify-between items-start mb-6">
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-gold text-lg">5</span>
+                    <div className="flex text-gold">
+                      {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" stroke="none" />)}
+                    </div>
+                  </div>
+                  <span className="text-[10px] text-dark/30 font-medium">{review.date}</span>
+                </div>
+              </div>
+              
+              <p className="text-dark/70 text-sm font-light leading-relaxed mb-8 flex-grow">
+                {review.text}
+                {review.text.length > 100 && (
+                  <button className="text-gold font-medium ml-1 hover:underline">More</button>
+                )}
+              </p>
+
+              <div className="flex justify-between items-center mt-auto pt-6 border-t border-black/5">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-dark/5 flex items-center justify-center text-dark/40 font-bold text-xs">
+                    {review.initials}
+                  </div>
+                  <span className="text-xs font-bold text-dark/60">{review.name}</span>
+                </div>
+                <svg viewBox="0 0 24 24" className="w-5 h-5 opacity-60" fill="currentColor">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <button className="text-[10px] font-bold uppercase tracking-[0.4em] text-dark/30 hover:text-dark transition-colors mb-20">Load More</button>
+          <div className="pt-12 border-t border-black/5">
+            <a 
+              href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-dark text-white px-16 py-6 font-bold uppercase text-[11px] tracking-[0.4em] hover:bg-gold hover:text-dark transition-all inline-block shadow-2xl"
+            >
+              Book Now
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -773,7 +929,7 @@ export default function App() {
                 }}
                 className="space-y-4"
               >
-                <span className="text-4xl font-serif font-medium text-gold">404</span>
+                <span className="text-4xl font-serif font-medium text-gold">884</span>
                 <p className="text-[9px] uppercase tracking-[0.3em] text-white/20 font-bold">Total Reviews</p>
               </motion.div>
             </div>
@@ -784,6 +940,7 @@ export default function App() {
       <Services />
       <Gallery />
       <Team />
+      <Reviews />
       
       {/* CTA Section */}
       <section className="py-24 md:py-40 bg-dark relative overflow-hidden">
