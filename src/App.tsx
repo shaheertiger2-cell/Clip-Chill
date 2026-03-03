@@ -6,6 +6,9 @@ import {
   X,
   Star,
   ArrowRight,
+  Calendar,
+  Phone,
+  MapPin,
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 
@@ -790,7 +793,6 @@ export default function App() {
     <div className="min-h-screen bg-dark">
       <Navbar />
       <Hero />
-      <Services />
 
       <section id="about" className="py-24 md:py-40 bg-dark relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-16 md:gap-32 items-center">
@@ -825,7 +827,7 @@ export default function App() {
               }
             }}
           >
-            <motion.span 
+            <motion.span
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -834,7 +836,7 @@ export default function App() {
             >
               Our Story
             </motion.span>
-            <motion.h2 
+            <motion.h2
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -843,7 +845,7 @@ export default function App() {
             >
               Classic Style, <br /><span className="italic text-white/40">Modern Cuts.</span>
             </motion.h2>
-            <motion.p 
+            <motion.p
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -852,7 +854,7 @@ export default function App() {
             >
               Clip & Chill was built for one reason: to give you a great place to relax and get a high-quality haircut.
             </motion.p>
-            <motion.p 
+            <motion.p
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -861,9 +863,82 @@ export default function App() {
             >
               We offer the feel of a traditional barbershop with the skill of modern styling. Our barbers focus on giving you a look that fits you perfectly.
             </motion.p>
+
+            {/* Action Buttons */}
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, x: 50 },
+                visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+              }}
+              className="flex flex-wrap gap-4 mb-10"
+            >
+              <a
+                href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-3 border border-gold/30 rounded-full text-gold hover:bg-gold/10 transition-all text-sm font-medium tracking-wide"
+              >
+                <Calendar size={16} />
+                Book Online
+              </a>
+              <a
+                href="tel:9056062212"
+                className="flex items-center gap-3 px-6 py-3 border border-white/10 rounded-full text-white/60 hover:text-gold hover:border-gold/30 transition-all text-sm font-medium tracking-wide"
+              >
+                <Phone size={16} />
+                (905) 606-2212
+              </a>
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=4099+Erin+Mills+Pkwy+%234,+Mississauga,+ON+L5L+3P9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-3 border border-white/10 rounded-full text-white/60 hover:text-gold hover:border-gold/30 transition-all text-sm font-medium tracking-wide"
+              >
+                <MapPin size={16} />
+                Get Directions
+              </a>
+            </motion.div>
+
+            {/* Social Media Icons */}
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, x: 50 },
+                visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+              }}
+              className="flex gap-5"
+            >
+              <a
+                href="https://www.instagram.com/clip.and.chill/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/40 hover:text-gold hover:border-gold/30 transition-all"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61571956989946"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/40 hover:text-gold hover:border-gold/30 transition-all"
+              >
+                <Facebook size={18} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@clip.and.chill"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/40 hover:text-gold hover:border-gold/30 transition-all"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.35 8.35 0 0 0 4.76 1.49v-3.5a4.85 4.85 0 0 1-1-.01z"/>
+                </svg>
+              </a>
+            </motion.div>
           </motion.div>
         </div>
       </section>
+
+      <Services />
 
       <Gallery />
       <Team />
