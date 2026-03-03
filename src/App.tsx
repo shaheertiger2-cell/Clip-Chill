@@ -1,22 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Clock, 
-  MapPin, 
-  Phone, 
-  Instagram, 
-  Facebook, 
-  Menu, 
-  X, 
-  ChevronRight,
+import React, { useState, useEffect } from 'react';
+import {
+  Instagram,
+  Facebook,
+  Menu,
+  X,
   Star,
-  Award,
-  Users,
   ArrowRight,
-  ExternalLink,
-  ArrowUpRight,
-  Play
 } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 
 // --- Components ---
 
@@ -26,9 +17,18 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
     { name: 'Services', href: '#services' },
@@ -43,7 +43,7 @@ const Navbar = () => {
   const bookingUrl = "https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services";
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-1000 ${isScrolled ? 'bg-dark/90 backdrop-blur-2xl border-b border-white/5 py-4' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-dark/95 md:bg-dark/90 md:backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-8 flex items-center justify-between relative h-20">
         
         {/* Left Side (Desktop Links) */}
@@ -124,9 +124,9 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 bg-dark/95 backdrop-blur-3xl z-50 md:hidden flex flex-col items-center justify-center p-12"
+            className="fixed inset-0 bg-dark/98 z-[200] md:hidden flex flex-col items-center justify-center p-12"
           >
-            <button className="absolute top-8 right-8" onClick={() => setIsMobileMenuOpen(false)}><X size={32} /></button>
+            <button className="absolute top-8 right-8 text-white p-2" onClick={() => setIsMobileMenuOpen(false)}><X size={32} /></button>
             <div className="flex flex-col items-center gap-10">
               {navLinks.map((link) => (
                 <a 
@@ -154,17 +154,29 @@ const Navbar = () => {
   );
 };
 
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+};
+
 const Hero = () => {
+  const isMobile = useIsMobile();
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1000], [0, 300]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const y = useTransform(scrollY, [0, 1000], [0, isMobile ? 0 : 300]);
+  const opacity = useTransform(scrollY, [0, 500], [1, isMobile ? 1 : 0]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-x-hidden bg-dark">
       {/* Background Image */}
-      <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
-        <img 
-          src="https://i.postimg.cc/wMfhtjbn/DSC04689.jpg" 
+      <motion.div style={isMobile ? undefined : { y, opacity }} className="absolute inset-0 z-0">
+        <img
+          src="https://i.postimg.cc/wMfhtjbn/DSC04689.jpg"
           alt="Clip & Chill Barbershop interior in Mississauga"
           className="w-full h-full object-cover opacity-40 scale-105"
           referrerPolicy="no-referrer"
@@ -256,16 +268,12 @@ const Services = () => {
         hidden: {
           opacity: 0,
           y: 30,
-          filter: 'blur(10px)',
-          clipPath: 'inset(0 100% 0 0)'
         },
         visible: {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
-          clipPath: 'inset(0 0% 0 0)',
           transition: {
-            duration: 1.2,
+            duration: 0.6,
             ease: [0.16, 1, 0.3, 1],
             delay: idx * 0.05
           }
@@ -409,10 +417,12 @@ const Gallery = () => {
               }}
               className="img-reveal aspect-[4/5] glass-panel"
             >
-              <img 
-                src={src} 
+              <img
+                src={src}
                 alt={`Clip & Chill Barbershop customer haircut ${i + 1}`}
                 className="w-full h-full object-cover opacity-60 hover:opacity-100 grayscale hover:grayscale-0"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
             </motion.div>
@@ -465,10 +475,12 @@ const Team = () => {
               className="glass-panel group hover:border-gold/30 transition-all duration-700 overflow-hidden flex flex-col"
             >
               <div className="aspect-[4/5] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
-                <img 
-                  src={barber.image} 
+                <img
+                  src={barber.image}
                   alt={`${barber.name} - ${barber.role} at Clip & Chill Barbershop`}
                   className="w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-1000"
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -691,10 +703,12 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-8 relative z-10">
         <div className="flex flex-col items-center text-center mb-16 md:mb-32">
           <a href="#" className="mb-12">
-            <img 
-              src="https://i.postimg.cc/gJWNVrk0/Company_logo_page_0001.jpg" 
-              alt="Clip & Chill Logo" 
+            <img
+              src="https://i.postimg.cc/gJWNVrk0/Company_logo_page_0001.jpg"
+              alt="Clip & Chill Logo"
               className="h-20 md:h-24 w-auto object-contain brightness-110 rounded-xl"
+              loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
             />
           </a>
@@ -752,38 +766,17 @@ const MobileStickyBook = () => {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-[100] p-6 pointer-events-none">
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-dark to-transparent opacity-90" />
-      <motion.div 
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto relative z-10"
-      >
-        <motion.a 
+      <div className="pointer-events-auto relative z-10">
+        <a
           href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
           target="_blank"
           rel="noopener noreferrer"
-          whileTap={{ scale: 0.95 }}
-          animate={{ 
-            boxShadow: [
-              "0 0 0 0 rgba(212, 175, 55, 0)",
-              "0 0 20px 10px rgba(212, 175, 55, 0.2)",
-              "0 0 0 0 rgba(212, 175, 55, 0)"
-            ]
-          }}
-          transition={{ 
-            boxShadow: {
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }
-          }}
-          className="w-full bg-gold py-5 rounded-none flex items-center justify-center gap-3 group relative overflow-hidden"
+          className="mobile-sticky-btn w-full bg-gold py-5 flex items-center justify-center gap-3 relative overflow-hidden active:scale-95 transition-transform"
         >
-          <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
           <span className="font-bold uppercase tracking-[0.3em] text-[11px] text-dark relative z-10">Book a Haircut</span>
-          <ArrowRight size={14} className="text-dark relative z-10 group-hover:translate-x-1 transition-transform" />
-        </motion.a>
-      </motion.div>
+          <ArrowRight size={14} className="text-dark relative z-10" />
+        </a>
+      </div>
     </div>
   );
 };
@@ -811,6 +804,7 @@ export default function App() {
                 title="Clip & Chill Barbershop - Our Story"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                loading="lazy"
                 className="w-full h-full border-0"
               />
             </div>
@@ -876,10 +870,12 @@ export default function App() {
       {/* CTA Section */}
       <section className="py-24 md:py-40 bg-dark relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=2000" 
-            alt="CTA Background" 
+          <img
+            src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=2000"
+            alt="CTA Background"
             className="w-full h-full object-cover opacity-10"
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-dark" />
         </div>
