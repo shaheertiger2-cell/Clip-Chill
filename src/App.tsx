@@ -165,7 +165,7 @@ const Hero = () => {
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
         <img 
           src="https://i.postimg.cc/wMfhtjbn/DSC04689.jpg" 
-          alt="Atmospheric Barbershop" 
+          alt="Clip & Chill Barbershop interior in Mississauga"
           className="w-full h-full object-cover opacity-40 scale-105"
           referrerPolicy="no-referrer"
         />
@@ -411,7 +411,7 @@ const Gallery = () => {
             >
               <img 
                 src={src} 
-                alt={`Gallery ${i}`} 
+                alt={`Clip & Chill Barbershop customer haircut ${i + 1}`}
                 className="w-full h-full object-cover opacity-60 hover:opacity-100 grayscale hover:grayscale-0"
                 referrerPolicy="no-referrer"
               />
@@ -467,7 +467,7 @@ const Team = () => {
               <div className="aspect-[4/5] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
                 <img 
                   src={barber.image} 
-                  alt={barber.name} 
+                  alt={`${barber.name} - ${barber.role} at Clip & Chill Barbershop`}
                   className="w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-1000"
                   referrerPolicy="no-referrer"
                 />
@@ -736,7 +736,7 @@ const Footer = () => {
 
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-[9px] text-white/20 uppercase tracking-[0.4em] font-bold">
-            © 2024 Clip & Chill Barbershop. All Rights Reserved.
+            © 2024–2026 Clip & Chill Barbershop. All Rights Reserved.
           </p>
           <div className="flex gap-10 text-[9px] text-white/20 uppercase tracking-[0.4em] font-bold">
             <a href="#" className="hover:text-gold transition-colors">Privacy</a>
@@ -807,7 +807,7 @@ export default function App() {
           >
             <img 
               src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=1000" 
-              alt="Craftsmanship" 
+              alt="Barber craftsmanship at Clip & Chill Barbershop Mississauga"
               className="w-full h-auto grayscale"
               referrerPolicy="no-referrer"
             />
