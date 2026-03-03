@@ -37,6 +37,11 @@ const Navbar = () => {
     { name: 'About', href: '#about' },
   ];
 
+  const mobileNavLinks = [
+    { name: 'Home', href: '#' },
+    ...navLinks,
+  ];
+
   const leftLinks = navLinks.slice(0, 2);
   const rightLinks = navLinks.slice(2);
 
@@ -128,10 +133,10 @@ const Navbar = () => {
           >
             <button className="absolute top-8 right-8 text-white p-2" onClick={() => setIsMobileMenuOpen(false)}><X size={32} /></button>
             <div className="flex flex-col items-center gap-10">
-              {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href} 
+              {mobileNavLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-4xl font-serif font-medium hover:text-gold transition-colors"
                 >
@@ -785,7 +790,8 @@ export default function App() {
     <div className="min-h-screen bg-dark">
       <Navbar />
       <Hero />
-      
+      <Services />
+
       <section id="about" className="py-24 md:py-40 bg-dark relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-16 md:gap-32 items-center">
           <motion.div
@@ -859,7 +865,6 @@ export default function App() {
         </div>
       </section>
 
-      <Services />
       <Gallery />
       <Team />
       <Reviews />
