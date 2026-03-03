@@ -807,7 +807,7 @@ export default function App() {
           >
             <div className="aspect-[9/16] w-full">
               <iframe
-                src="https://www.youtube.com/embed/xmD6GAVkI54"
+                src="https://www.youtube.com/embed/xmD6GAVkI54?modestbranding=1&showinfo=0&rel=0&controls=1"
                 title="Clip & Chill Barbershop - Our Story"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
