@@ -11,10 +11,8 @@ import {
   MapPin,
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 
-// --- Constants ---
-const SEO_ARTICLE_PATH = '/best-cheap-haircut-mississauga.md';
 
 
 // --- Components ---
@@ -42,7 +40,7 @@ const Navbar = () => {
     { name: 'Services', href: '#services' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Team', href: '#team' },
-    { name: 'Blog', href: '#blog' },
+    { name: 'Blog', href: '/blog' },
     { name: 'About', href: '#about' },
   ];
 
@@ -63,18 +61,23 @@ const Navbar = () => {
         
         {/* Left Side (Desktop Links) */}
         <div className="hidden md:flex flex-1 items-center gap-12">
-          {leftLinks.map((link, i) => (
-            <motion.a 
-              key={link.name} 
-              href={link.href} 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.1 + 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40 hover:text-gold transition-all duration-500"
-            >
-              {link.name}
-            </motion.a>
-          ))}
+          {leftLinks.map((link, i) => {
+            const className = "text-[9px] font-bold uppercase tracking-[0.4em] text-white/40 hover:text-gold transition-all duration-500";
+            const motionProps = {
+              initial: { opacity: 0, y: -20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.8, delay: i * 0.1 + 0.5, ease: [0.16, 1, 0.3, 1] as const },
+            };
+            return link.href.startsWith('/') ? (
+              <motion.div key={link.name} {...motionProps}>
+                <Link to={link.href} className={className}>{link.name}</Link>
+              </motion.div>
+            ) : (
+              <motion.a key={link.name} href={link.href} {...motionProps} className={className}>
+                {link.name}
+              </motion.a>
+            );
+          })}
         </div>
 
         {/* Mobile Spacer (Left) */}
@@ -99,18 +102,23 @@ const Navbar = () => {
 
         {/* Right Side (Desktop Links + Button) */}
         <div className="hidden md:flex flex-1 items-center justify-end gap-12">
-          {rightLinks.map((link, i) => (
-            <motion.a 
-              key={link.name} 
-              href={link.href} 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.1 + 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40 hover:text-gold transition-all duration-500"
-            >
-              {link.name}
-            </motion.a>
-          ))}
+          {rightLinks.map((link, i) => {
+            const className = "text-[9px] font-bold uppercase tracking-[0.4em] text-white/40 hover:text-gold transition-all duration-500";
+            const motionProps = {
+              initial: { opacity: 0, y: -20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.8, delay: i * 0.1 + 0.7, ease: [0.16, 1, 0.3, 1] as const },
+            };
+            return link.href.startsWith('/') ? (
+              <motion.div key={link.name} {...motionProps}>
+                <Link to={link.href} className={className}>{link.name}</Link>
+              </motion.div>
+            ) : (
+              <motion.a key={link.name} href={link.href} {...motionProps} className={className}>
+                {link.name}
+              </motion.a>
+            );
+          })}
           <motion.a 
             href={bookingUrl}
             target="_blank"
@@ -144,14 +152,25 @@ const Navbar = () => {
             <button className="absolute top-8 right-8 text-white p-2" onClick={() => setIsMobileMenuOpen(false)}><X size={32} /></button>
             <div className="flex flex-col items-center gap-10">
               {mobileNavLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-4xl font-serif font-medium hover:text-gold transition-colors"
-                >
-                  {link.name}
-                </a>
+                link.href.startsWith('/') ? (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-4xl font-serif font-medium hover:text-gold transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-4xl font-serif font-medium hover:text-gold transition-colors"
+                  >
+                    {link.name}
+                  </a>
+                )
               ))}
               <a 
                 href={bookingUrl}
@@ -793,45 +812,6 @@ const MobileStickyBook = () => {
   );
 };
 
-const Blog = () => {
-  const [content, setContent] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(SEO_ARTICLE_PATH)
-      .then(res => res.text())
-      .then(text => {
-        // Remove yaml frontmatter
-        const cleanContent = text.replace(/^---[\s\S]*?---/, '');
-        setContent(cleanContent);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error('Failed to load article:', err);
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading) return null;
-
-  return (
-    <section id="blog" className="py-24 md:py-40 bg-dark relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-8">
-        <div className="mb-16 md:mb-24 text-center">
-          <span className="sub-label">Insights</span>
-          <h2 className="section-title">Barber's Journal</h2>
-        </div>
-        
-        <div className="glass-panel p-8 md:p-16 rounded-2xl border-gold/10 hover:border-gold/20 transition-all duration-700">
-          <article className="prose prose-invert prose-gold max-w-none prose-headings:font-serif prose-headings:font-medium prose-p:text-white/60 prose-p:leading-relaxed prose-strong:text-gold prose-a:text-gold prose-a:no-underline hover:prose-a:underline">
-            <ReactMarkdown>{content}</ReactMarkdown>
-          </article>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 // --- Main App ---
 
 
@@ -840,7 +820,6 @@ export default function App() {
     <div className="min-h-screen bg-dark">
       <Navbar />
       <Hero />
-      <Blog />
 
 
       <section id="about" className="py-24 md:py-40 bg-dark relative overflow-hidden">
