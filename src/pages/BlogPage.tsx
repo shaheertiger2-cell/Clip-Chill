@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, User, Calendar, ChevronRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { Analytics } from '@vercel/analytics/react';
 
 const SEO_ARTICLE_PATH = '/best-cheap-haircut-mississauga.md';
 
@@ -289,6 +290,7 @@ export default function BlogPage() {
           </article>
         </div>
       </div>
+      <Analytics />
     </div>
   );
 }
