@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, User, Calendar, ChevronRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { trackBookingConversion } from '../analytics';
 
 const SEO_ARTICLE_PATH = '/best-cheap-haircut-mississauga.md';
 
@@ -121,6 +122,7 @@ export default function BlogPage() {
               href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackBookingConversion}
               className="btn-luxury !px-5 !py-2"
             >
               <span>Book Now</span>
@@ -263,6 +265,7 @@ export default function BlogPage() {
                   href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={trackBookingConversion}
                   className="btn-luxury px-10 py-4 inline-flex items-center justify-center"
                 >
                   <span>Book Appointment</span>
