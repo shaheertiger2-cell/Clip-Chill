@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
+import { trackBookingConversion } from './analytics';
 
 
 
@@ -119,10 +120,11 @@ const Navbar = () => {
               </motion.a>
             );
           })}
-          <motion.a 
+          <motion.a
             href={bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackBookingConversion}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -172,10 +174,11 @@ const Navbar = () => {
                   </a>
                 )
               ))}
-              <a 
+              <a
                 href={bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={trackBookingConversion}
                 className="btn-luxury mt-8"
               >
                 <span>Book a Haircut</span>
@@ -247,10 +250,11 @@ const Hero = () => {
             transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-8 justify-center items-center"
           >
-            <a 
+            <a
               href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackBookingConversion}
               className="btn-luxury px-12 py-5 inline-flex items-center justify-center"
             >
               <span>Book a Haircut</span>
@@ -713,10 +717,11 @@ const Reviews = () => {
         <div className="text-center">
           <button className="text-[10px] font-bold uppercase tracking-[0.4em] text-dark/30 hover:text-dark transition-colors mb-20">Load More</button>
           <div className="pt-12 border-t border-black/5">
-            <a 
+            <a
               href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackBookingConversion}
               className="bg-dark text-white px-16 py-6 font-bold uppercase text-[11px] tracking-[0.4em] hover:bg-gold hover:text-dark transition-all inline-block shadow-2xl"
             >
               Book Now
@@ -802,6 +807,7 @@ const MobileStickyBook = () => {
           href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={trackBookingConversion}
           className="mobile-sticky-btn w-full bg-gold py-5 flex items-center justify-center gap-3 relative overflow-hidden active:scale-95 transition-transform"
         >
           <span className="font-bold uppercase tracking-[0.3em] text-[11px] text-dark relative z-10">Book a Haircut</span>
@@ -904,6 +910,7 @@ export default function App() {
                 href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={trackBookingConversion}
                 className="flex items-center gap-3 px-6 py-3 border border-gold/30 rounded-full text-gold hover:bg-gold/10 transition-all text-sm font-medium tracking-wide"
               >
                 <Calendar size={16} />
@@ -1022,10 +1029,11 @@ export default function App() {
                 visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
               }}
             >
-              <a 
+              <a
                 href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={trackBookingConversion}
                 className="btn-luxury px-16 py-6 inline-flex items-center justify-center"
               >
                 <span>Book Your Appointment</span>
