@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, User, Calendar, ChevronRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Analytics } from '@vercel/analytics/react';
+import { trackBookingConversion } from '../analytics';
 
 const SEO_ARTICLE_PATH = '/best-cheap-haircut-mississauga.md';
 

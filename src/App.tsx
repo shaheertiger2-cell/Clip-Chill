@@ -13,6 +13,7 @@ import {
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
+import { trackBookingConversion } from './analytics';
 
 
 
