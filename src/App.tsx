@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { trackBookingConversion } from './analytics';
+import { Analytics } from '@vercel/analytics/react';
 
 
 
@@ -1047,6 +1047,7 @@ export default function App() {
 
       <Footer />
       <MobileStickyBook />
+      <Analytics />
     </div>
   );
 }
