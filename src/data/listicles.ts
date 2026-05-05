@@ -101,15 +101,15 @@ const clipAndChill: Barbershop = {
 
 export const bestBarberErinMills: ListicleData = {
   slug: 'best-barber-erin-mills',
-  metaTitle: 'Best Barber in Erin Mills (2025) — Top 5 Reviewed & Ranked',
+  metaTitle: 'Best Barber in Erin Mills (2026) — Top 5 Reviewed & Ranked',
   metaDescription:
     'Looking for the best barber in Erin Mills, Mississauga? We ranked the top 5 barbershops by reviews, skill, and value. #1 rated: Clip & Chill — 400+ five-star Google reviews.',
-  h1: 'Best Barber in Erin Mills, Mississauga (2025)',
+  h1: 'Best Barber in Erin Mills, Mississauga (2026)',
   category: 'Barber',
   neighborhood: 'Erin Mills',
   city: 'Mississauga',
   publishDate: '2025-01-15',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
     'Finding a great barber in Erin Mills can feel like a gamble — until now. We combed through hundreds of Google reviews, visited the shops, and scored each one on skill, consistency, value, and experience. Whether you\'re after a sharp skin fade, a classic cut, or a full beard sculpt, this list has you covered.',
   methodology:
@@ -294,17 +294,17 @@ export const bestBarberErinMills: ListicleData = {
 
 export const bestHaircutMississauga: ListicleData = {
   slug: 'best-haircut-mississauga',
-  metaTitle: 'Best Haircut in Mississauga (2025) — Top 5 Barbershops Reviewed',
+  metaTitle: 'Best Haircut in Mississauga (2026) — Top 5 Barbershops Reviewed',
   metaDescription:
     'Where to get the best haircut in Mississauga? We ranked the top 5 barbershops by reviews, skill, and value. Clip & Chill leads with 400+ five-star reviews.',
-  h1: 'Best Haircut in Mississauga (2025) — Top 5 Ranked',
+  h1: 'Best Haircut in Mississauga (2026) — Top 5 Ranked',
   category: 'Haircut',
   neighborhood: 'Mississauga',
   city: 'Mississauga',
   publishDate: '2025-02-01',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
-    'Mississauga has no shortage of barbershops, but finding one that delivers premium results consistently is harder than it looks. We analyzed hundreds of Google reviews, checked pricing, and evaluated each shop\'s range of services to give you the definitive 2025 ranking. From budget cuts to luxury grooming, this list covers all budgets and styles.',
+    'Mississauga has no shortage of barbershops, but finding one that delivers premium results consistently is harder than it looks. We analyzed hundreds of Google reviews, checked pricing, and evaluated each shop\'s range of services to give you the definitive 2026 ranking. From budget cuts to luxury grooming, this list covers all budgets and styles.',
   methodology:
     'Rankings factor in Google rating (minimum 4.0), review volume, service variety, booking experience, and price-to-quality ratio. Shops with fewer than 50 reviews were not considered.',
   faqs: [
@@ -487,15 +487,15 @@ export const bestHaircutMississauga: ListicleData = {
 
 export const bestBarberStreetsville: ListicleData = {
   slug: 'best-barber-streetsville',
-  metaTitle: 'Best Barber in Streetsville, Mississauga (2025) — Top 5 Ranked',
+  metaTitle: 'Best Barber in Streetsville, Mississauga (2026) — Top 5 Ranked',
   metaDescription:
     'Searching for the best barber in Streetsville? We ranked the top 5 barbershops by reviews, skill, and value. Clip & Chill leads with 400+ five-star Google reviews.',
-  h1: 'Best Barber in Streetsville, Mississauga (2025)',
+  h1: 'Best Barber in Streetsville, Mississauga (2026)',
   category: 'Barber',
   neighborhood: 'Streetsville',
   city: 'Mississauga',
   publishDate: '2025-02-15',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
     "Streetsville — Mississauga's \"Village in the City\" — has a growing number of barbershops. But only a handful consistently deliver sharp fades and premium grooming. We reviewed the options and ranked the top five so you don't have to guess.",
   methodology:
@@ -632,15 +632,15 @@ export const bestBarberStreetsville: ListicleData = {
 
 export const bestBarberMeadowvale: ListicleData = {
   slug: 'best-barber-meadowvale',
-  metaTitle: 'Best Barber in Meadowvale, Mississauga (2025) — Top 5 Ranked',
+  metaTitle: 'Best Barber in Meadowvale, Mississauga (2026) — Top 5 Ranked',
   metaDescription:
-    'Looking for the best barber in Meadowvale? Our 2025 ranking covers the top 5 barbershops near Meadowvale, Mississauga — ranked by Google reviews and quality.',
-  h1: 'Best Barber in Meadowvale, Mississauga (2025)',
+    'Looking for the best barber in Meadowvale? Our 2026 ranking covers the top 5 barbershops near Meadowvale, Mississauga — ranked by Google reviews and quality.',
+  h1: 'Best Barber in Meadowvale, Mississauga (2026)',
   category: 'Barber',
   neighborhood: 'Meadowvale',
   city: 'Mississauga',
   publishDate: '2025-03-01',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
     "Meadowvale is one of Mississauga's most family-friendly neighbourhoods — and finding a barber who can deliver a consistent, quality cut is essential. We ranked the top five options in and around Meadowvale so you can book with confidence.",
   methodology:
@@ -777,17 +777,17 @@ export const bestBarberMeadowvale: ListicleData = {
 
 export const bestBarberPortCredit: ListicleData = {
   slug: 'best-barber-port-credit',
-  metaTitle: 'Best Barber in Port Credit, Mississauga (2025) — Top 5 Reviewed',
+  metaTitle: 'Best Barber in Port Credit, Mississauga (2026) — Top 5 Reviewed',
   metaDescription:
     'Find the best barber in Port Credit, Mississauga. We ranked the top 5 barbershops by reviews, skill, and value — with real customer reviews for each.',
-  h1: 'Best Barber in Port Credit, Mississauga (2025)',
+  h1: 'Best Barber in Port Credit, Mississauga (2026)',
   category: 'Barber',
   neighborhood: 'Port Credit',
   city: 'Mississauga',
   publishDate: '2025-03-10',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
-    "Port Credit has the waterfront charm — and now it needs a great barber to match. From the lakeshore village to the neighbourhoods just north, we ranked the top five barbershops serving Port Credit residents in 2025.",
+    "Port Credit has the waterfront charm — and now it needs a great barber to match. From the lakeshore village to the neighbourhoods just north, we ranked the top five barbershops serving Port Credit residents in 2026.",
   methodology:
     'Rankings are based on Google review scores weighted by volume, service range, booking ease, and overall value. Minimum 50 reviews required.',
   faqs: [
@@ -922,15 +922,15 @@ export const bestBarberPortCredit: ListicleData = {
 
 export const bestBarberOakville: ListicleData = {
   slug: 'best-barber-oakville',
-  metaTitle: 'Best Barber in Oakville (2025) — Top 5 Barbershops Reviewed',
+  metaTitle: 'Best Barber in Oakville (2026) — Top 5 Barbershops Reviewed',
   metaDescription:
     'Where to get the best haircut in Oakville? We ranked the top 5 barbershops by reviews and quality. Clip & Chill just across the border leads with 400+ five-star reviews.',
-  h1: 'Best Barber in Oakville (2025) — Top 5 Ranked',
+  h1: 'Best Barber in Oakville (2026) — Top 5 Ranked',
   category: 'Barber',
   neighborhood: 'Oakville',
   city: 'Oakville',
   publishDate: '2025-03-20',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
     "Oakville has no shortage of barbershops, but consistent quality is harder to find. Whether you're in North Oakville, Bronte, or the downtown core, this ranking covers the best options across the city — including the top-rated shop just over the Mississauga border.",
   methodology:
@@ -1067,17 +1067,17 @@ export const bestBarberOakville: ListicleData = {
 
 export const bestBarberBrampton: ListicleData = {
   slug: 'best-barber-brampton',
-  metaTitle: 'Best Barber in Brampton (2025) — Top 5 Barbershops Reviewed',
+  metaTitle: 'Best Barber in Brampton (2026) — Top 5 Barbershops Reviewed',
   metaDescription:
     'Searching for the best barber in Brampton? We ranked the top 5 barbershops by reviews and quality. Clip & Chill near the Brampton–Mississauga border leads the pack.',
-  h1: 'Best Barber in Brampton (2025) — Top 5 Ranked',
+  h1: 'Best Barber in Brampton (2026) — Top 5 Ranked',
   category: 'Barber',
   neighborhood: 'Brampton',
   city: 'Brampton',
   publishDate: '2025-04-01',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
-    "Brampton is a city of over 600,000 people — and the barbershop scene reflects that diversity. From Bramalea to downtown Brampton, Heart Lake to the Mississauga border, we ranked the top five shops serving Brampton residents in 2025.",
+    "Brampton is a city of over 600,000 people — and the barbershop scene reflects that diversity. From Bramalea to downtown Brampton, Heart Lake to the Mississauga border, we ranked the top five shops serving Brampton residents in 2026.",
   methodology:
     'Rankings weigh Google review score and volume, service breadth, and price-to-quality ratio. Only shops with 50+ reviews were considered.',
   faqs: [
@@ -1212,17 +1212,17 @@ export const bestBarberBrampton: ListicleData = {
 
 export const bestBarberChurchillMeadows: ListicleData = {
   slug: 'best-barber-churchill-meadows',
-  metaTitle: 'Best Barber in Churchill Meadows, Mississauga (2025) — Top 5',
+  metaTitle: 'Best Barber in Churchill Meadows, Mississauga (2026) — Top 5',
   metaDescription:
     'Looking for the best barber in Churchill Meadows? We ranked the top 5 barbershops serving the area — with real reviews and booking links. #1: Clip & Chill.',
-  h1: 'Best Barber in Churchill Meadows, Mississauga (2025)',
+  h1: 'Best Barber in Churchill Meadows, Mississauga (2026)',
   category: 'Barber',
   neighborhood: 'Churchill Meadows',
   city: 'Mississauga',
   publishDate: '2025-04-10',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
-    "Churchill Meadows is one of the fastest-growing communities in Mississauga — and the demand for quality barbershops has never been higher. We reviewed every noteworthy shop in and around the area to bring you the definitive 2025 ranking.",
+    "Churchill Meadows is one of the fastest-growing communities in Mississauga — and the demand for quality barbershops has never been higher. We reviewed every noteworthy shop in and around the area to bring you the definitive 2026 ranking.",
   methodology:
     'Rankings factor in Google rating weighted by review count, service range, booking ease, and value. Only shops with 50+ reviews were included.',
   faqs: [
@@ -1357,17 +1357,17 @@ export const bestBarberChurchillMeadows: ListicleData = {
 
 export const bestBarberClarkson: ListicleData = {
   slug: 'best-barber-clarkson',
-  metaTitle: 'Best Barber in Clarkson, Mississauga (2025) — Top 5 Reviewed',
+  metaTitle: 'Best Barber in Clarkson, Mississauga (2026) — Top 5 Reviewed',
   metaDescription:
-    'Find the best barber in Clarkson, Mississauga. Our 2025 ranking covers the top 5 shops by reviews and quality — with real customer reviews and booking links.',
-  h1: 'Best Barber in Clarkson, Mississauga (2025)',
+    'Find the best barber in Clarkson, Mississauga. Our 2026 ranking covers the top 5 shops by reviews and quality — with real customer reviews and booking links.',
+  h1: 'Best Barber in Clarkson, Mississauga (2026)',
   category: 'Barber',
   neighborhood: 'Clarkson',
   city: 'Mississauga',
   publishDate: '2025-04-15',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
-    "Clarkson is a quiet suburban neighbourhood on the shores of Lake Ontario — and it deserves a great barbershop. We looked at every quality option in and around Clarkson to give you the 2025 definitive ranking.",
+    "Clarkson is a quiet suburban neighbourhood on the shores of Lake Ontario — and it deserves a great barbershop. We looked at every quality option in and around Clarkson to give you the 2026 definitive ranking.",
   methodology:
     'Rankings are based on Google review score and volume, service quality, and price-to-value. Only shops with 50+ reviews were considered.',
   faqs: [
@@ -1502,15 +1502,15 @@ export const bestBarberClarkson: ListicleData = {
 
 export const bestFadeHaircutMississauga: ListicleData = {
   slug: 'best-fade-haircut-mississauga',
-  metaTitle: 'Best Fade Haircut in Mississauga (2025) — Top 5 Barbers Ranked',
+  metaTitle: 'Best Fade Haircut in Mississauga (2026) — Top 5 Barbers Ranked',
   metaDescription:
     'Where to get the best fade haircut in Mississauga? We ranked the top 5 barbers for skin fades, taper fades & high fades — based on 100s of real Google reviews.',
-  h1: 'Best Fade Haircut in Mississauga (2025) — Top 5 Barbers',
+  h1: 'Best Fade Haircut in Mississauga (2026) — Top 5 Barbers',
   category: 'Fade Haircut',
   neighborhood: 'Mississauga',
   city: 'Mississauga',
   publishDate: '2025-04-20',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
     "A perfect fade is an art form. Whether you want a skin fade, mid fade, taper fade, or high fade, finding a barber who can execute it precisely — every single time — is everything. We ranked the top five fade specialists in Mississauga based on hundreds of Google reviews.",
   methodology:
@@ -1647,15 +1647,15 @@ export const bestFadeHaircutMississauga: ListicleData = {
 
 export const bestBeardTrimMississauga: ListicleData = {
   slug: 'best-beard-trim-mississauga',
-  metaTitle: 'Best Beard Trim in Mississauga (2025) — Top 5 Barbers for Beards',
+  metaTitle: 'Best Beard Trim in Mississauga (2026) — Top 5 Barbers for Beards',
   metaDescription:
     'Looking for the best beard trim in Mississauga? We ranked the top 5 barbershops for beard sculpting, trims, and hot towel shaves — with real Google reviews.',
-  h1: 'Best Beard Trim in Mississauga (2025) — Top 5 Barbers',
+  h1: 'Best Beard Trim in Mississauga (2026) — Top 5 Barbers',
   category: 'Beard Trim',
   neighborhood: 'Mississauga',
   city: 'Mississauga',
   publishDate: '2025-04-25',
-  updatedDate: '2025-05-01',
+  updatedDate: '2026-05-05',
   intro:
     "A great beard doesn't maintain itself. Whether you want a clean line-up, a full beard sculpt, or a classic hot towel straight-razor shave, you need a barber who treats beard work as its own craft. We ranked the top five in Mississauga based on Google reviews and beard-specific expertise.",
   methodology:

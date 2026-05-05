@@ -176,7 +176,7 @@ export default function BlogPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar size={14} className="text-gold/60" />
-                  <span>2025</span>
+                  <span>2026</span>
                 </div>
               </div>
             </>
