@@ -12,8 +12,13 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
   render() {
     if (this.state.error) {
       return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', flexDirection: 'column', gap: '16px', fontFamily: 'sans-serif', color: '#fff', background: '#0a0a0a' }}>
-          <h1 style={{ fontSize: '1.5rem' }}>Something went wrong</h1>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', flexDirection: 'column', gap: '16px', fontFamily: 'monospace', color: '#fff', background: '#0a0a0a', padding: '2rem', textAlign: 'center' }}>
+          <h1 style={{ fontSize: '1.2rem', color: '#d4af37' }}>Something went wrong</h1>
+          <pre style={{ fontSize: '0.75rem', color: '#ff6b6b', maxWidth: '90vw', overflowX: 'auto', whiteSpace: 'pre-wrap', background: '#1a1a1a', padding: '1rem', borderRadius: '8px' }}>
+            {(this.state.error as Error)?.message}
+            {'\n'}
+            {(this.state.error as Error)?.stack?.split('\n').slice(0, 5).join('\n')}
+          </pre>
           <a href="/" style={{ color: '#d4af37' }}>← Return home</a>
         </div>
       );
