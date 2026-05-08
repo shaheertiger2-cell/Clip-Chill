@@ -15,6 +15,16 @@ import { Link } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { trackBookingConversion } from './analytics';
 
+const LOCATION_PAGES = [
+  { label: 'Barber in Erin Mills', slug: 'barber-erin-mills' },
+  { label: 'Barber in Mississauga', slug: 'barber-mississauga' },
+  { label: 'Barber near Streetsville', slug: 'barber-streetsville' },
+  { label: 'Barber near Churchill Meadows', slug: 'barber-churchill-meadows' },
+  { label: 'Barber near UTM', slug: 'barber-utm' },
+  { label: 'Barber near Oakville', slug: 'barber-oakville' },
+  { label: 'Barber near Meadowvale', slug: 'barber-meadowvale' },
+];
+
 const SERVICE_PAGES = [
   { label: 'Barber Shop Mississauga', slug: 'barber-shop-mississauga' },
   { label: 'Barber Shop Erin Mills', slug: 'barbershop-erin-mills' },
@@ -773,7 +783,7 @@ const Footer = () => {
             <a href="https://www.facebook.com/profile.php?id=61571956989946" target="_blank" rel="noopener noreferrer" className="text-white/20 hover:text-gold transition-colors"><Facebook size={20} /></a>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12 md:gap-16 w-full pt-24 border-t border-white/5">
+          <div className="grid md:grid-cols-4 gap-12 md:gap-10 w-full pt-24 border-t border-white/5">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -807,6 +817,26 @@ const Footer = () => {
               <h4 className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold mb-10">Services</h4>
               <ul className="space-y-3">
                 {SERVICE_PAGES.map((p) => (
+                  <li key={p.slug}>
+                    <Link
+                      to={`/${p.slug}`}
+                      className="text-xs text-white/30 hover:text-gold transition-colors font-light leading-relaxed"
+                    >
+                      {p.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h4 className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold mb-10">Areas We Serve</h4>
+              <ul className="space-y-3">
+                {LOCATION_PAGES.map((p) => (
                   <li key={p.slug}>
                     <Link
                       to={`/${p.slug}`}
