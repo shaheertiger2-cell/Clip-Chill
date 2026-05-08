@@ -244,33 +244,52 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/20 to-dark" />
       </motion.div>
 
-      <div className="relative z-10 text-center px-8 max-w-5xl">
+      <div className="relative z-10 text-center px-8 max-w-5xl w-full">
         <div className="py-20 md:py-0 pb-32 md:pb-0">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="sub-label mb-8 block">Established 2024</span>
-            <h1 className="font-serif text-4xl md:text-8xl lg:text-9xl font-medium mb-6 md:mb-10 leading-[1.1] tracking-tight text-glow">
-              Modern Haircuts & <br />
-              <span className="italic text-white/40">Classic Shaves.</span>
+            <span className="sub-label mb-8 block">Barber Shop · Erin Mills, Mississauga</span>
+            <h1 className="font-serif text-4xl md:text-7xl lg:text-8xl font-medium mb-6 md:mb-8 leading-[1.1] tracking-tight text-glow">
+              Barber Shop in<br />
+              <span className="italic text-white/40">Erin Mills, Mississauga.</span>
             </h1>
           </motion.div>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-white/50 text-base md:text-xl mb-10 md:mb-14 max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-white/50 text-base md:text-xl mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed font-light"
           >
-            Get a professional haircut in a relaxed atmosphere. We combine classic techniques with modern styles to keep you looking your best.
+            Premium haircuts, skin fades, beard trims &amp; grooming — steps from Erin Mills Town Centre. Walk-ins welcome.
           </motion.p>
-          
-          <motion.div 
+
+          {/* Proof bar */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-10 md:mb-12"
+          >
+            {[
+              { icon: Star, label: '5.0 Google Rating · 406 Reviews' },
+              { icon: MapPin, label: '4099 Erin Mills Pkwy #4' },
+              { icon: Phone, label: 'Walk-ins Welcome · Open Daily' },
+            ].map(({ icon: Icon, label }, i) => (
+              <span key={i} className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-white/30">
+                <Icon size={12} className="text-gold/60 shrink-0" />
+                {label}
+              </span>
+            ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-8 justify-center items-center"
           >
             <a
@@ -280,13 +299,13 @@ const Hero = () => {
               onClick={trackBookingConversion}
               className="btn-luxury px-12 py-5 inline-flex items-center justify-center"
             >
-              <span>Book a Haircut</span>
+              <span>Book Your Haircut</span>
             </a>
-            <a 
-              href="#services" 
+            <a
+              href="#services"
               className="group flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.4em] text-white/30 hover:text-gold transition-all"
             >
-              See Haircuts
+              See Services
               <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
             </a>
           </motion.div>
