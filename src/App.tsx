@@ -47,6 +47,55 @@ const SERVICE_PAGES = [
 
 // --- Components ---
 
+const QuickLinks = () => {
+  const BOOKING_URL = "https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services";
+  const pages = [
+    { label: 'Barber Shop Erin Mills', to: '/barbershop-erin-mills', external: false },
+    { label: "Men's Haircut — $30", to: '/mens-haircut-mississauga', external: false },
+    { label: 'Skin Fade Mississauga', to: '/skin-fade-mississauga', external: false },
+    { label: 'Beard Trim Mississauga', to: '/beard-trim-mississauga', external: false },
+    { label: 'Prices', to: '#services', external: false },
+    { label: 'Gallery', to: '#gallery', external: false },
+    { label: 'Reviews', to: '#reviews', external: false },
+    { label: 'Book Appointment →', to: BOOKING_URL, external: true },
+  ];
+
+  return (
+    <nav aria-label="Quick navigation" className="bg-dark border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-8 py-3 overflow-x-auto no-scrollbar">
+        <ul className="flex items-center gap-1 whitespace-nowrap w-max">
+          {pages.map(({ label, to, external }) => {
+            const cls = "px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 hover:text-gold hover:bg-white/3 rounded transition-all duration-300";
+            if (external) {
+              return (
+                <li key={label}>
+                  <a href={to} target="_blank" rel="noopener noreferrer" onClick={trackBookingConversion} className={`${cls} text-gold/60 hover:text-gold`}>
+                    {label}
+                  </a>
+                </li>
+              );
+            }
+            if (to.startsWith('#')) {
+              return (
+                <li key={label} className="flex items-center">
+                  <span className="text-white/10 mr-1 text-xs">·</span>
+                  <a href={to} className={cls}>{label}</a>
+                </li>
+              );
+            }
+            return (
+              <li key={label} className="flex items-center">
+                <span className="text-white/10 mr-1 text-xs">·</span>
+                <Link to={to} className={cls}>{label}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
 const TrustBar = () => {
   const items = [
     { icon: Star,      label: '5.0 Google Rating',          sub: '406 verified reviews' },
@@ -363,8 +412,8 @@ const Services = () => {
   const services = [
     { name: "Haircut", price: "$30", time: "30min", description: "A clean, professional cut that fits your style.", slug: "mens-haircut-mississauga" },
     { name: "Beard Trim", price: "$25", time: "15min", description: "Keep your beard looking sharp and well-maintained.", slug: "beard-trim-mississauga" },
-    { name: "Haircut and Beard", price: "$50", time: "45min", description: "A fresh haircut combined with a professional beard trim." },
-    { name: "Long Haircut", price: "$35", time: "30min", description: "For longer hair or more detailed styles." },
+    { name: "Haircut and Beard", price: "$50", time: "45min", description: "A fresh haircut combined with a professional beard trim.", slug: "barber-shop-mississauga" },
+    { name: "Skin Fade", price: "$30", time: "30min", description: "A precision fade down to skin — low, mid, or high. Our most-requested style.", slug: "skin-fade-mississauga" },
     { name: "Kid's Cut (Under 10 Years)", price: "$25", time: "30min", description: "A great haircut experience for kids.", slug: "kids-haircut-mississauga" },
     { name: "Senior Haircut", price: "$25", time: "30min", description: "Traditional haircuts for seniors." },
     { name: "Hot Towel Shave", price: "$25", time: "30min", description: "A classic straight-razor shave with a relaxing hot towel." },
@@ -1033,6 +1082,7 @@ export default function App() {
       <Navbar />
       <Hero />
       <TrustBar />
+      <QuickLinks />
 
       <section id="about" className="py-24 md:py-40 bg-dark relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-16 md:gap-32 items-center">
