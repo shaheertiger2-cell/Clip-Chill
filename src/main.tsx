@@ -1,9 +1,12 @@
 import { StrictMode, Component, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
 import App from './App.tsx';
 import BlogPage from './pages/BlogPage.tsx';
 import ListiclePage from './pages/ListiclePage.tsx';
+import ServicePage from './pages/ServicePage.tsx';
+import { listicles } from './data/listicles.ts';
+import { services } from './data/services.ts';
 import './index.css';
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
@@ -27,6 +30,14 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
   }
 }
 
+function SlugRouter() {
+  const { slug } = useParams<{ slug: string }>();
+  if (!slug) return <Navigate to="/" replace />;
+  if (slug in listicles) return <ListiclePage />;
+  if (slug in services) return <ServicePage />;
+  return <Navigate to="/" replace />;
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
@@ -34,7 +45,7 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/blog" element={<BlogPage />} />
-          <Route path="/:slug" element={<ListiclePage />} />
+          <Route path="/:slug" element={<SlugRouter />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

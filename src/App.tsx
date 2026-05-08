@@ -15,6 +15,18 @@ import { Link } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { trackBookingConversion } from './analytics';
 
+const SERVICE_PAGES = [
+  { label: 'Barber Shop Mississauga', slug: 'barber-shop-mississauga' },
+  { label: 'Barber Shop Erin Mills', slug: 'barbershop-erin-mills' },
+  { label: "Men's Haircut Mississauga", slug: 'mens-haircut-mississauga' },
+  { label: 'Skin Fade Mississauga', slug: 'skin-fade-mississauga' },
+  { label: 'Beard Trim Mississauga', slug: 'beard-trim-mississauga' },
+  { label: "Kids Haircut Mississauga", slug: 'kids-haircut-mississauga' },
+  { label: 'Haircut near Erin Mills Town Centre', slug: 'haircut-erin-mills-town-centre' },
+  { label: 'Walk-In Barber Mississauga', slug: 'walk-in-barber-mississauga' },
+  { label: 'Barbershop near UTM', slug: 'barbershop-near-utm' },
+];
+
 
 
 // --- Components ---
@@ -286,18 +298,18 @@ const Hero = () => {
 
 const Services = () => {
   const services = [
-    { name: "Haircut", price: "$30", time: "30min", description: "A clean, professional cut that fits your style." },
-    { name: "Beard Trim", price: "$25", time: "15min", description: "Keep your beard looking sharp and well-maintained." },
+    { name: "Haircut", price: "$30", time: "30min", description: "A clean, professional cut that fits your style.", slug: "mens-haircut-mississauga" },
+    { name: "Beard Trim", price: "$25", time: "15min", description: "Keep your beard looking sharp and well-maintained.", slug: "beard-trim-mississauga" },
     { name: "Haircut and Beard", price: "$50", time: "45min", description: "A fresh haircut combined with a professional beard trim." },
     { name: "Long Haircut", price: "$35", time: "30min", description: "For longer hair or more detailed styles." },
-    { name: "Kid's Cut (Under 10 Years)", price: "$25", time: "30min", description: "A great haircut experience for kids." },
+    { name: "Kid's Cut (Under 10 Years)", price: "$25", time: "30min", description: "A great haircut experience for kids.", slug: "kids-haircut-mississauga" },
     { name: "Senior Haircut", price: "$25", time: "30min", description: "Traditional haircuts for seniors." },
     { name: "Hot Towel Shave", price: "$25", time: "30min", description: "A classic straight-razor shave with a relaxing hot towel." },
     { name: "Face Wax", price: "$10", time: "15min", description: "Complete face, ear, and nose waxing for a clean, polished look." },
     { name: "Clip & Chill Package", price: "$110", time: "1h 30min", description: "The full experience: haircut, beard trim, hot towel shave, skin care, facial, shoulder massage, face wax, face threading, and hair wash & styling." },
   ];
 
-  const renderServiceItem = (item: typeof services[0], idx: number) => (
+  const renderServiceItem = (item: (typeof services)[0], idx: number) => (
     <motion.div
       key={item.name}
       variants={{
@@ -327,7 +339,11 @@ const Services = () => {
             }}
             className="h-px bg-gold group-hover:w-12 transition-all duration-700"
           />
-          {item.name}
+          {'slug' in item && item.slug ? (
+            <Link to={`/${item.slug}`} className="hover:text-gold transition-colors">
+              {item.name}
+            </Link>
+          ) : item.name}
         </h4>
         <motion.span
           variants={{
@@ -757,7 +773,7 @@ const Footer = () => {
             <a href="https://www.facebook.com/profile.php?id=61571956989946" target="_blank" rel="noopener noreferrer" className="text-white/20 hover:text-gold transition-colors"><Facebook size={20} /></a>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 md:gap-24 w-full pt-24 border-t border-white/5">
+          <div className="grid md:grid-cols-3 gap-12 md:gap-16 w-full pt-24 border-t border-white/5">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -781,6 +797,26 @@ const Footer = () => {
                 <p>Mon - Sat: 10:00 - 20:00</p>
                 <p>Sunday: 11:00 - 19:00</p>
               </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h4 className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold mb-10">Services</h4>
+              <ul className="space-y-3">
+                {SERVICE_PAGES.map((p) => (
+                  <li key={p.slug}>
+                    <Link
+                      to={`/${p.slug}`}
+                      className="text-xs text-white/30 hover:text-gold transition-colors font-light leading-relaxed"
+                    >
+                      {p.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           </div>
         </div>
