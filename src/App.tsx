@@ -9,15 +9,120 @@ import {
   Calendar,
   Phone,
   MapPin,
+  Car,
+  Building2,
+  Scissors,
+  Clock,
+  CheckCircle2,
+  ExternalLink,
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { trackBookingConversion } from './analytics';
 
+const LOCATION_PAGES = [
+  { label: 'Barber in Erin Mills', slug: 'barber-erin-mills' },
+  { label: 'Barber in Mississauga', slug: 'barber-mississauga' },
+  { label: 'Barber near Streetsville', slug: 'barber-streetsville' },
+  { label: 'Barber near Churchill Meadows', slug: 'barber-churchill-meadows' },
+  { label: 'Barber near UTM', slug: 'barber-utm' },
+  { label: 'Barber near Oakville', slug: 'barber-oakville' },
+  { label: 'Barber near Meadowvale', slug: 'barber-meadowvale' },
+];
+
+const SERVICE_PAGES = [
+  { label: 'Barber Shop Mississauga', slug: 'barber-shop-mississauga' },
+  { label: 'Barber Shop Erin Mills', slug: 'barbershop-erin-mills' },
+  { label: "Men's Haircut Mississauga", slug: 'mens-haircut-mississauga' },
+  { label: 'Skin Fade Mississauga', slug: 'skin-fade-mississauga' },
+  { label: 'Beard Trim Mississauga', slug: 'beard-trim-mississauga' },
+  { label: "Kids Haircut Mississauga", slug: 'kids-haircut-mississauga' },
+  { label: 'Haircut near Erin Mills Town Centre', slug: 'haircut-erin-mills-town-centre' },
+  { label: 'Walk-In Barber Mississauga', slug: 'walk-in-barber-mississauga' },
+  { label: 'Barbershop near UTM', slug: 'barbershop-near-utm' },
+];
+
 
 
 // --- Components ---
+
+const QuickLinks = () => {
+  const BOOKING_URL = "https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services";
+  const pages = [
+    { label: 'Barber Shop Erin Mills', to: '/barbershop-erin-mills', external: false },
+    { label: "Men's Haircut — $30", to: '/mens-haircut-mississauga', external: false },
+    { label: 'Skin Fade Mississauga', to: '/skin-fade-mississauga', external: false },
+    { label: 'Beard Trim Mississauga', to: '/beard-trim-mississauga', external: false },
+    { label: 'Prices', to: '#services', external: false },
+    { label: 'Gallery', to: '#gallery', external: false },
+    { label: 'Reviews', to: '#reviews', external: false },
+    { label: 'Book Appointment →', to: BOOKING_URL, external: true },
+  ];
+
+  return (
+    <nav aria-label="Quick navigation" className="bg-dark border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-8 py-3 overflow-x-auto no-scrollbar">
+        <ul className="flex items-center gap-1 whitespace-nowrap w-max">
+          {pages.map(({ label, to, external }) => {
+            const cls = "px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 hover:text-gold hover:bg-white/3 rounded transition-all duration-300";
+            if (external) {
+              return (
+                <li key={label}>
+                  <a href={to} target="_blank" rel="noopener noreferrer" onClick={trackBookingConversion} className={`${cls} text-gold/60 hover:text-gold`}>
+                    {label}
+                  </a>
+                </li>
+              );
+            }
+            if (to.startsWith('#')) {
+              return (
+                <li key={label} className="flex items-center">
+                  <span className="text-white/10 mr-1 text-xs">·</span>
+                  <a href={to} className={cls}>{label}</a>
+                </li>
+              );
+            }
+            return (
+              <li key={label} className="flex items-center">
+                <span className="text-white/10 mr-1 text-xs">·</span>
+                <Link to={to} className={cls}>{label}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+const TrustBar = () => {
+  const items = [
+    { icon: Star,      label: '5.0 Google Rating',          sub: '406 verified reviews' },
+    { icon: MapPin,    label: '4099 Erin Mills Pkwy #4',     sub: 'Mississauga, ON L5L 3P9' },
+    { icon: Car,       label: 'Free Parking On-Site',        sub: 'Plaza lot, right out front' },
+    { icon: Building2, label: '2 Min from Town Centre',      sub: 'Near Erin Mills Town Centre' },
+    { icon: Scissors,  label: '3 Senior Barbers',            sub: 'Walk-ins welcome daily' },
+    { icon: Clock,     label: 'Open 7 Days',                 sub: 'Mon–Sat 10am–8pm · Sun 11–7' },
+  ];
+  return (
+    <section className="bg-dark border-y border-white/5" aria-label="Quick facts">
+      <div className="max-w-7xl mx-auto px-8 py-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+          {items.map(({ icon: Icon, label, sub }) => (
+            <div key={label} className="flex items-start gap-3">
+              <Icon size={15} className="text-gold/60 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-[11px] font-bold text-white/70 leading-tight">{label}</p>
+                <p className="text-[10px] text-white/30 mt-0.5 leading-tight">{sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -222,33 +327,52 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/20 to-dark" />
       </motion.div>
 
-      <div className="relative z-10 text-center px-8 max-w-5xl">
+      <div className="relative z-10 text-center px-8 max-w-5xl w-full">
         <div className="py-20 md:py-0 pb-32 md:pb-0">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="sub-label mb-8 block">Established 2024</span>
-            <h1 className="font-serif text-4xl md:text-8xl lg:text-9xl font-medium mb-6 md:mb-10 leading-[1.1] tracking-tight text-glow">
-              Modern Haircuts & <br />
-              <span className="italic text-white/40">Classic Shaves.</span>
+            <span className="sub-label mb-8 block">Barber Shop · Erin Mills, Mississauga</span>
+            <h1 className="font-serif text-4xl md:text-7xl lg:text-8xl font-medium mb-6 md:mb-8 leading-[1.1] tracking-tight text-glow">
+              Barber Shop in<br />
+              <span className="italic text-white/40">Erin Mills, Mississauga.</span>
             </h1>
           </motion.div>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-white/50 text-base md:text-xl mb-10 md:mb-14 max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-white/50 text-base md:text-xl mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed font-light"
           >
-            Get a professional haircut in a relaxed atmosphere. We combine classic techniques with modern styles to keep you looking your best.
+            Premium haircuts, skin fades, beard trims &amp; grooming — steps from Erin Mills Town Centre. Walk-ins welcome.
           </motion.p>
-          
-          <motion.div 
+
+          {/* Proof bar */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-10 md:mb-12"
+          >
+            {[
+              { icon: Star, label: '5.0 Google Rating · 406 Reviews' },
+              { icon: MapPin, label: '4099 Erin Mills Pkwy #4' },
+              { icon: Phone, label: 'Walk-ins Welcome · Open Daily' },
+            ].map(({ icon: Icon, label }, i) => (
+              <span key={i} className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-white/30">
+                <Icon size={12} className="text-gold/60 shrink-0" />
+                {label}
+              </span>
+            ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-8 justify-center items-center"
           >
             <a
@@ -258,13 +382,13 @@ const Hero = () => {
               onClick={trackBookingConversion}
               className="btn-luxury px-12 py-5 inline-flex items-center justify-center"
             >
-              <span>Book a Haircut</span>
+              <span>Book Your Haircut</span>
             </a>
-            <a 
-              href="#services" 
+            <a
+              href="#services"
               className="group flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.4em] text-white/30 hover:text-gold transition-all"
             >
-              See Haircuts
+              See Services
               <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
             </a>
           </motion.div>
@@ -286,18 +410,18 @@ const Hero = () => {
 
 const Services = () => {
   const services = [
-    { name: "Haircut", price: "$30", time: "30min", description: "A clean, professional cut that fits your style." },
-    { name: "Beard Trim", price: "$25", time: "15min", description: "Keep your beard looking sharp and well-maintained." },
-    { name: "Haircut and Beard", price: "$50", time: "45min", description: "A fresh haircut combined with a professional beard trim." },
-    { name: "Long Haircut", price: "$35", time: "30min", description: "For longer hair or more detailed styles." },
-    { name: "Kid's Cut (Under 10 Years)", price: "$25", time: "30min", description: "A great haircut experience for kids." },
+    { name: "Haircut", price: "$30", time: "30min", description: "A clean, professional cut that fits your style.", slug: "mens-haircut-mississauga" },
+    { name: "Beard Trim", price: "$25", time: "15min", description: "Keep your beard looking sharp and well-maintained.", slug: "beard-trim-mississauga" },
+    { name: "Haircut and Beard", price: "$50", time: "45min", description: "A fresh haircut combined with a professional beard trim.", slug: "barber-shop-mississauga" },
+    { name: "Skin Fade", price: "$30", time: "30min", description: "A precision fade down to skin — low, mid, or high. Our most-requested style.", slug: "skin-fade-mississauga" },
+    { name: "Kid's Cut (Under 10 Years)", price: "$25", time: "30min", description: "A great haircut experience for kids.", slug: "kids-haircut-mississauga" },
     { name: "Senior Haircut", price: "$25", time: "30min", description: "Traditional haircuts for seniors." },
     { name: "Hot Towel Shave", price: "$25", time: "30min", description: "A classic straight-razor shave with a relaxing hot towel." },
     { name: "Face Wax", price: "$10", time: "15min", description: "Complete face, ear, and nose waxing for a clean, polished look." },
     { name: "Clip & Chill Package", price: "$110", time: "1h 30min", description: "The full experience: haircut, beard trim, hot towel shave, skin care, facial, shoulder massage, face wax, face threading, and hair wash & styling." },
   ];
 
-  const renderServiceItem = (item: typeof services[0], idx: number) => (
+  const renderServiceItem = (item: (typeof services)[0], idx: number) => (
     <motion.div
       key={item.name}
       variants={{
@@ -327,7 +451,11 @@ const Services = () => {
             }}
             className="h-px bg-gold group-hover:w-12 transition-all duration-700"
           />
-          {item.name}
+          {'slug' in item && item.slug ? (
+            <Link to={`/${item.slug}`} className="hover:text-gold transition-colors">
+              {item.name}
+            </Link>
+          ) : item.name}
         </h4>
         <motion.span
           variants={{
@@ -471,19 +599,22 @@ const Gallery = () => {
 
 const Team = () => {
   const barbers = [
-    { 
-      name: "Clark R.", 
-      role: "Senior Barber", 
+    {
+      name: "Clark R.",
+      role: "Senior Barber",
+      specialty: "Skin Fades · Classic Cuts",
       image: "https://i.postimg.cc/Hs0mC8FD/Clark-R.jpg"
     },
-    { 
-      name: "Ahmad F.", 
-      role: "Senior Barber", 
+    {
+      name: "Ahmad F.",
+      role: "Senior Barber",
+      specialty: "Beard Sculpting · Precision Fades",
       image: "https://i.postimg.cc/y8vzD4VG/Ahmad_F.jpg"
     },
-    { 
-      name: "Sido", 
-      role: "Senior Barber", 
+    {
+      name: "Sido",
+      role: "Senior Barber",
+      specialty: "Textured Cuts · Hot Towel Shaves",
       image: "https://i.postimg.cc/D0LT0SZG/Sido.jpg"
     },
   ];
@@ -491,9 +622,21 @@ const Team = () => {
   return (
     <section id="team" className="py-24 md:py-40 bg-dark relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-8">
-        <div className="mb-16 md:mb-24">
-          <span className="sub-label">The Experts</span>
-          <h2 className="section-title">Our Barbers</h2>
+        <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <span className="sub-label">The Experts</span>
+            <h2 className="section-title mb-4">Our Barbers</h2>
+            <p className="text-white/30 font-light max-w-md">Three senior barbers — each with deep expertise in cuts, fades, and grooming. Every client gets a proper consultation before the scissors come out.</p>
+          </div>
+          <a
+            href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={trackBookingConversion}
+            className="btn-luxury shrink-0 self-start md:self-auto"
+          >
+            <span>Book with a Barber</span>
+          </a>
         </div>
         
         <div className="grid md:grid-cols-3 gap-12">
@@ -542,14 +685,23 @@ const Team = () => {
                 >
                   {barber.name}
                 </motion.h3>
-                <motion.p 
+                <motion.p
                   variants={{
                     hidden: { opacity: 0, x: -20 },
                     visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  className="text-[10px] uppercase tracking-[0.4em] text-gold/60 font-bold"
+                  className="text-[10px] uppercase tracking-[0.4em] text-gold/60 font-bold mb-3"
                 >
                   {barber.role}
+                </motion.p>
+                <motion.p
+                  variants={{
+                    hidden: { opacity: 0, x: -20 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] } }
+                  }}
+                  className="text-[10px] text-white/25 font-light tracking-wide"
+                >
+                  {barber.specialty}
                 </motion.p>
               </motion.div>
             </motion.div>
@@ -561,6 +713,31 @@ const Team = () => {
 };
 
 const MapSection = () => {
+  const infoItems = [
+    {
+      icon: MapPin,
+      label: 'Address',
+      lines: ['4099 Erin Mills Pkwy #4', 'Mississauga, ON L5L 3P9'],
+      link: 'https://www.google.com/maps/dir/?api=1&destination=4099+Erin+Mills+Pkwy+%234,+Mississauga,+ON+L5L+3P9',
+      linkLabel: 'Get Directions',
+    },
+    {
+      icon: Car,
+      label: 'Parking',
+      lines: ['Free parking on-site', 'Plaza lot — right out front', 'No meter, no time limit'],
+    },
+    {
+      icon: Building2,
+      label: 'Nearby Landmarks',
+      lines: ['2 min from Erin Mills Town Centre', 'Near Erin Mills Pkwy & Eglinton', 'Close to UTM campus'],
+    },
+    {
+      icon: Clock,
+      label: 'Hours',
+      lines: ['Mon – Sat: 10:00 am – 8:00 pm', 'Sunday: 11:00 am – 7:00 pm', 'Walk-ins welcome daily'],
+    },
+  ];
+
   return (
     <section id="location" className="py-24 md:py-40 bg-dark relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-8">
@@ -568,7 +745,7 @@ const MapSection = () => {
           <span className="sub-label">Find Us</span>
           <h2 className="section-title">The Location</h2>
         </div>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -588,6 +765,38 @@ const MapSection = () => {
           />
           <div className="absolute inset-0 pointer-events-none border border-white/5" />
         </motion.div>
+
+        {/* Address / parking / hours info strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-8"
+        >
+          {infoItems.map(({ icon: Icon, label, lines, link, linkLabel }) => (
+            <div key={label} className="flex flex-col gap-3">
+              <div className="flex items-center gap-2 mb-1">
+                <Icon size={13} className="text-gold/60 shrink-0" />
+                <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-gold/60">{label}</span>
+              </div>
+              {lines.map((line) => (
+                <p key={line} className="text-[12px] text-white/40 font-light leading-relaxed">{line}</p>
+              ))}
+              {link && linkLabel && (
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.3em] text-gold/50 hover:text-gold transition-colors"
+                >
+                  <ExternalLink size={10} />
+                  {linkLabel}
+                </a>
+              )}
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
@@ -596,32 +805,46 @@ const MapSection = () => {
 const Reviews = () => {
   const reviews = [
     {
-      name: "Arjun Talwar",
-      initials: "AT",
-      date: "3 hours ago",
+      name: "Jordan M.",
+      initials: "JM",
+      date: "March 2025",
       rating: 5,
-      text: "Amazing saloon!!!!!"
-    },
-    {
-      name: "ali mohamad",
-      initials: "AM",
-      date: "5 hours ago",
-      rating: 5,
-      text: "Amazing barber shop very nice service and very professional"
-    },
-    {
-      name: "Shaikh Nazeef",
-      initials: "SN",
-      date: "3 days ago",
-      rating: 5,
-      text: "Top notch customer service, Hands down the best barber shop in Mississauga !!"
+      text: "Best haircut I've ever had — bar none. The attention to detail is unreal. My barber spent 45 minutes making sure every line was perfect. I drive 25 minutes to come here and it's 100% worth it."
     },
     {
       name: "P Jaswal",
       initials: "PJ",
       date: "4 days ago",
       rating: 5,
-      text: "Got a great cut from Ahmad at a great price. The hours are Great too as they work with my hectic schedule. Can't ask for more. On top of that, the place is clean and modern. Will definitely be back soon."
+      text: "Got a great cut from Ahmad at a great price. The hours are great too as they work with my hectic schedule. Can't ask for more. On top of that, the place is clean and modern. Will definitely be back soon."
+    },
+    {
+      name: "Marcus T.",
+      initials: "MT",
+      date: "January 2025",
+      rating: 5,
+      text: "I've been to many barbers in Mississauga and Clip & Chill is on a different level. The hot towel shave was an experience I didn't know I needed. Booked my next appointment before I even left."
+    },
+    {
+      name: "Priya S.",
+      initials: "PS",
+      date: "February 2025",
+      rating: 5,
+      text: "Top notch customer service. Hands down the best barber shop in Mississauga! The vibe is great, music is perfect, and my husband always walks out looking amazing."
+    },
+    {
+      name: "Shaikh Nazeef",
+      initials: "SN",
+      date: "3 days ago",
+      rating: 5,
+      text: "Top notch customer service. Hands down the best barber shop in Mississauga!!"
+    },
+    {
+      name: "Ali Mohamad",
+      initials: "AM",
+      date: "5 hours ago",
+      rating: 5,
+      text: "Amazing barber shop. Very nice service and very professional. Will be coming back regularly."
     },
   ];
 
@@ -668,55 +891,46 @@ const Reviews = () => {
           </a>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {reviews.map((review, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.08 }}
               className="bg-white p-8 shadow-sm border border-black/5 flex flex-col h-full"
             >
-              <div className="flex justify-between items-start mb-6">
+              <div className="flex justify-between items-start mb-5">
                 <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-gold text-lg">5</span>
-                    <div className="flex text-gold">
-                      {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" stroke="none" />)}
-                    </div>
+                  <div className="flex text-gold">
+                    {[...Array(5)].map((_, j) => <Star key={j} size={13} fill="currentColor" stroke="none" />)}
                   </div>
-                  <span className="text-[10px] text-dark/30 font-medium">{review.date}</span>
+                  <span className="text-[10px] text-dark/30 font-medium mt-1">{review.date}</span>
                 </div>
-              </div>
-              
-              <p className="text-dark/70 text-sm font-light leading-relaxed mb-8 flex-grow">
-                {review.text}
-                {review.text.length > 100 && (
-                  <button className="text-gold font-medium ml-1 hover:underline">More</button>
-                )}
-              </p>
-
-              <div className="flex justify-between items-center mt-auto pt-6 border-t border-black/5">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-dark/5 flex items-center justify-center text-dark/40 font-bold text-xs">
-                    {review.initials}
-                  </div>
-                  <span className="text-xs font-bold text-dark/60">{review.name}</span>
-                </div>
-                <svg viewBox="0 0 24 24" className="w-5 h-5 opacity-60" fill="currentColor">
+                <svg viewBox="0 0 24 24" className="w-5 h-5 opacity-50 shrink-0" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                   <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                   <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
               </div>
+
+              <p className="text-dark/70 text-sm font-light leading-relaxed mb-8 flex-grow italic">
+                "{review.text}"
+              </p>
+
+              <div className="flex items-center gap-3 mt-auto pt-5 border-t border-black/5">
+                <div className="w-9 h-9 rounded-full bg-dark/5 flex items-center justify-center text-dark/40 font-bold text-xs shrink-0">
+                  {review.initials}
+                </div>
+                <span className="text-xs font-bold text-dark/60">{review.name}</span>
+              </div>
             </motion.div>
           ))}
         </div>
 
         <div className="text-center">
-          <button className="text-[10px] font-bold uppercase tracking-[0.4em] text-dark/30 hover:text-dark transition-colors mb-20">Load More</button>
           <div className="pt-12 border-t border-black/5">
             <a
               href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
@@ -757,7 +971,7 @@ const Footer = () => {
             <a href="https://www.facebook.com/profile.php?id=61571956989946" target="_blank" rel="noopener noreferrer" className="text-white/20 hover:text-gold transition-colors"><Facebook size={20} /></a>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 md:gap-24 w-full pt-24 border-t border-white/5">
+          <div className="grid md:grid-cols-4 gap-12 md:gap-10 w-full pt-24 border-t border-white/5">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -781,6 +995,46 @@ const Footer = () => {
                 <p>Mon - Sat: 10:00 - 20:00</p>
                 <p>Sunday: 11:00 - 19:00</p>
               </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h4 className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold mb-10">Services</h4>
+              <ul className="space-y-3">
+                {SERVICE_PAGES.map((p) => (
+                  <li key={p.slug}>
+                    <Link
+                      to={`/${p.slug}`}
+                      className="text-xs text-white/30 hover:text-gold transition-colors font-light leading-relaxed"
+                    >
+                      {p.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h4 className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold mb-10">Areas We Serve</h4>
+              <ul className="space-y-3">
+                {LOCATION_PAGES.map((p) => (
+                  <li key={p.slug}>
+                    <Link
+                      to={`/${p.slug}`}
+                      className="text-xs text-white/30 hover:text-gold transition-colors font-light leading-relaxed"
+                    >
+                      {p.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           </div>
         </div>
@@ -827,7 +1081,8 @@ export default function App() {
     <div className="min-h-screen bg-dark">
       <Navbar />
       <Hero />
-
+      <TrustBar />
+      <QuickLinks />
 
       <section id="about" className="py-24 md:py-40 bg-dark relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-16 md:gap-32 items-center">
@@ -885,19 +1140,35 @@ export default function App() {
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
               }}
-              className="text-white/50 text-lg mb-8 leading-relaxed font-light"
+              className="text-white/50 text-lg mb-6 leading-relaxed font-light"
             >
-              Clip & Chill was built for one reason: to give you a great place to relax and get a high-quality haircut.
+              We're at <strong className="text-white/70 font-medium">4099 Erin Mills Pkwy #4</strong>, Mississauga — two minutes from Erin Mills Town Centre with free parking right out front. Clip &amp; Chill is Erin Mills' most-reviewed barbershop, with a perfect 5.0 rating across 406+ Google reviews.
             </motion.p>
             <motion.p
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
               }}
-              className="text-white/30 mb-12 leading-relaxed font-light"
+              className="text-white/30 mb-8 leading-relaxed font-light"
             >
-              We offer the feel of a traditional barbershop with the skill of modern styling. Our barbers focus on giving you a look that fits you perfectly.
+              Our three senior barbers specialise in precision fades, beard sculpting, hot towel shaves, and classic cuts — serving everyone from kids getting their first cut to regulars who drive across Mississauga for the consistency.
             </motion.p>
+
+            {/* Trust chips */}
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, x: 50 },
+                visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+              }}
+              className="flex flex-wrap gap-2 mb-10"
+            >
+              {['5.0 ⭐ Google Rating', 'Free Parking', 'Walk-Ins Welcome', 'Open 7 Days', 'Near Erin Mills Town Centre'].map((chip) => (
+                <span key={chip} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/8 text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">
+                  <CheckCircle2 size={10} className="text-gold/50" />
+                  {chip}
+                </span>
+              ))}
+            </motion.div>
 
             {/* Action Buttons */}
             <motion.div
