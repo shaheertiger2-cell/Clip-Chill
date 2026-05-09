@@ -248,18 +248,7 @@ export default function BlogPostPage() {
             {isLoading ? (
               <div className="text-center text-white/40 py-20">Loading article...</div>
             ) : (
-              <div className="prose prose-invert prose-lg max-w-none
-                prose-headings:font-serif prose-headings:font-medium prose-headings:tracking-tight
-                prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-6 prose-h2:text-white prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4
-                prose-h3:text-xl md:prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-4 prose-h3:text-white/90
-                prose-p:text-white/50 prose-p:leading-[1.8] prose-p:text-base md:prose-p:text-lg prose-p:mb-6
-                prose-strong:text-gold prose-strong:font-semibold
-                prose-em:text-white/60 prose-em:italic
-                prose-a:text-gold prose-a:no-underline prose-a:border-b prose-a:border-gold/30 hover:prose-a:border-gold prose-a:transition-colors
-                prose-li:text-white/50 prose-li:leading-[1.8] prose-li:text-base md:prose-li:text-lg prose-li:marker:text-gold/40
-                prose-ol:my-6 prose-ul:my-6
-                prose-hr:border-white/5 prose-hr:my-12
-              ">
+              <div className="article-body prose prose-invert max-w-none">
                 <ReactMarkdown
                   components={{
                     h1: () => null,

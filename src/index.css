@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap');
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -91,6 +92,89 @@
   .img-reveal:hover img {
     @apply scale-100;
   }
+}
+
+/* No-scrollbar utility for QuickLinks strip */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Article prose overrides — applied on top of prose-invert */
+.article-body {
+  --tw-prose-body: rgba(255,255,255,0.55);
+  --tw-prose-headings: #ffffff;
+  --tw-prose-bold: #d4af37;
+  --tw-prose-links: #d4af37;
+  --tw-prose-bullets: rgba(212,175,55,0.4);
+  --tw-prose-counters: rgba(212,175,55,0.4);
+  --tw-prose-quotes: rgba(255,255,255,0.4);
+  --tw-prose-quote-borders: rgba(212,175,55,0.3);
+  --tw-prose-hr: rgba(255,255,255,0.05);
+  --tw-prose-th-borders: rgba(255,255,255,0.1);
+  --tw-prose-td-borders: rgba(255,255,255,0.05);
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+
+.article-body h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  letter-spacing: -0.01em;
+}
+
+.article-body h3 {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.article-body p {
+  margin-bottom: 1.4rem;
+}
+
+.article-body ul, .article-body ol {
+  margin: 1.25rem 0;
+  padding-left: 1.5rem;
+}
+
+.article-body li {
+  margin-bottom: 0.5rem;
+  color: rgba(255,255,255,0.55);
+}
+
+.article-body strong {
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.article-body a {
+  color: #d4af37;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212,175,55,0.3);
+  transition: border-color 0.2s;
+}
+
+.article-body a:hover {
+  border-color: #d4af37;
+}
+
+.article-body hr {
+  border-color: rgba(255,255,255,0.06);
+  margin: 2.5rem 0;
+}
+
+.article-body blockquote {
+  border-left: 3px solid rgba(212,175,55,0.4);
+  padding-left: 1.25rem;
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
 }
 
 /* Custom Scrollbar */
