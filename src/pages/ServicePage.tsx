@@ -11,9 +11,11 @@ import {
   Calendar,
   ArrowRight,
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { services } from '../data/services';
 import { trackBookingConversion } from '../analytics';
+import { useSeo, useJsonLd, type SeoConfig } from '../lib/seo';
+import { serviceSchemas } from '../lib/schema';
 
 const BOOKING_URL = 'https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services';
 
@@ -44,75 +46,6 @@ const REVIEWS = [
     text: 'Got a great cut from Ahmad at a great price. The hours are great too as they work with my hectic schedule. The place is clean and modern. Will definitely be back.',
   },
 ];
-
-// ─── Structured data ─────────────────────────────────────────────────────────
-
-function useServiceSchema(slug: string, h1: string, metaDescription: string) {
-  useEffect(() => {
-    const schema = {
-      '@context': 'https://schema.org',
-      '@type': 'LocalBusiness',
-      '@id': 'https://clipandchill.ca',
-      name: 'Clip & Chill Barbershop',
-      description: metaDescription,
-      url: `https://clipandchill.ca/${slug}`,
-      telephone: '+19056062212',
-      priceRange: '$$',
-      image: 'https://i.postimg.cc/gJWNVrk0/Company_logo_page_0001.jpg',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: '4099 Erin Mills Pkwy #4',
-        addressLocality: 'Mississauga',
-        addressRegion: 'ON',
-        postalCode: 'L5L 3P9',
-        addressCountry: 'CA',
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: 43.5352458,
-        longitude: -79.6976644,
-      },
-      openingHoursSpecification: [
-        { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '10:00', closes: '20:00' },
-        { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Sunday'], opens: '11:00', closes: '19:00' },
-      ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5.0',
-        reviewCount: '406',
-      },
-      hasOfferCatalog: {
-        '@type': 'OfferCatalog',
-        name: h1,
-      },
-    };
-
-    const breadcrumb = {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://clipandchill.ca/' },
-        { '@type': 'ListItem', position: 2, name: h1, item: `https://clipandchill.ca/${slug}` },
-      ],
-    };
-
-    const schemas = [schema, breadcrumb];
-    const ids = schemas.map((_, i) => `service-ld-${i}`);
-
-    schemas.forEach((s, i) => {
-      let el = document.getElementById(ids[i]) as HTMLScriptElement | null;
-      if (!el) {
-        el = document.createElement('script');
-        el.id = ids[i];
-        el.type = 'application/ld+json';
-        document.head.appendChild(el);
-      }
-      el.textContent = JSON.stringify(s);
-    });
-
-    return () => ids.forEach((id) => document.getElementById(id)?.remove());
-  }, [slug, h1, metaDescription]);
-}
 
 // ─── FAQ Accordion ───────────────────────────────────────────────────────────
 
@@ -145,32 +78,13 @@ export default function ServicePage() {
   const { slug } = useParams<{ slug: string }>();
   const data = slug ? services[slug] : undefined;
 
-  useEffect(() => {
-    if (!data) return;
-    document.title = data.metaTitle;
-
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', data.metaDescription);
-
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-    canonical.href = `https://clipandchill.ca/${data.slug}`;
-  }, [data]);
-
-  useServiceSchema(
-    data?.slug ?? '',
-    data?.h1 ?? '',
-    data?.metaDescription ?? '',
-  );
+  const seoConfig: SeoConfig = {
+    title: data?.metaTitle ?? 'Clip & Chill Barbershop | Mississauga',
+    description: data?.metaDescription ?? 'Premium haircuts and grooming in Mississauga.',
+    path: data ? `/${data.slug}` : '/',
+  };
+  useSeo(seoConfig);
+  useJsonLd('service-ld', data ? serviceSchemas(data) : []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -272,7 +186,7 @@ export default function ServicePage() {
       <main className="max-w-5xl mx-auto px-6 md:px-8 pb-20">
 
         {/* Intro */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -282,10 +196,10 @@ export default function ServicePage() {
           <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-3xl">
             {data.intro}
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Key Features */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -299,7 +213,7 @@ export default function ServicePage() {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {data.keyFeatures.map((feature, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -309,10 +223,10 @@ export default function ServicePage() {
               >
                 <CheckCircle2 size={16} className="text-gold/70 mt-0.5 shrink-0" />
                 <span className="text-sm text-white/60 leading-relaxed">{feature}</span>
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.section>
+        </m.section>
 
         {/* Gallery */}
         <section className="mb-16 md:mb-24" aria-labelledby="gallery-heading">
@@ -322,7 +236,7 @@ export default function ServicePage() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {GALLERY.map((src, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -338,7 +252,7 @@ export default function ServicePage() {
                   decoding="async"
                   referrerPolicy="no-referrer"
                 />
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </section>
@@ -360,7 +274,7 @@ export default function ServicePage() {
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {REVIEWS.map((review, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -385,7 +299,7 @@ export default function ServicePage() {
                     <p className="text-[10px] text-white/25">{review.date}</p>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </section>

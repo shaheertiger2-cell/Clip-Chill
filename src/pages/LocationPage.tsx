@@ -12,9 +12,11 @@ import {
   ArrowRight,
   Navigation,
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { locations, SERVICES_LIST } from '../data/locations';
 import { trackBookingConversion } from '../analytics';
+import { useSeo, useJsonLd, type SeoConfig } from '../lib/seo';
+import { locationSchemas } from '../lib/schema';
 
 const BOOKING_URL = 'https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services';
 const MAPS_URL = 'https://www.google.com/maps/dir/?api=1&destination=4099+Erin+Mills+Pkwy+%234,+Mississauga,+ON+L5L+3P9';
@@ -39,85 +41,6 @@ const REVIEWS = [
     text: 'Top notch customer service. Hands down the best barber shop in Mississauga!!',
   },
 ];
-
-// ─── Structured data ─────────────────────────────────────────────────────────
-
-function useLocationSchema(slug: string, h1: string, description: string, neighborhood: string) {
-  useEffect(() => {
-    const schema = {
-      '@context': 'https://schema.org',
-      '@type': 'LocalBusiness',
-      '@id': 'https://clipandchill.ca',
-      name: 'Clip & Chill Barbershop',
-      description,
-      url: `https://clipandchill.ca/${slug}`,
-      telephone: '+19056062212',
-      priceRange: '$$',
-      image: 'https://i.postimg.cc/gJWNVrk0/Company_logo_page_0001.jpg',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: '4099 Erin Mills Pkwy #4',
-        addressLocality: 'Mississauga',
-        addressRegion: 'ON',
-        postalCode: 'L5L 3P9',
-        addressCountry: 'CA',
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: 43.5352458,
-        longitude: -79.6976644,
-      },
-      areaServed: {
-        '@type': 'Place',
-        name: neighborhood,
-      },
-      openingHoursSpecification: [
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-          opens: '10:00',
-          closes: '20:00',
-        },
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Sunday'],
-          opens: '11:00',
-          closes: '19:00',
-        },
-      ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5.0',
-        reviewCount: '406',
-      },
-    };
-
-    const breadcrumb = {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://clipandchill.ca/' },
-        { '@type': 'ListItem', position: 2, name: h1, item: `https://clipandchill.ca/${slug}` },
-      ],
-    };
-
-    const schemas = [schema, breadcrumb];
-    const ids = schemas.map((_, i) => `location-ld-${i}`);
-
-    schemas.forEach((s, i) => {
-      let el = document.getElementById(ids[i]) as HTMLScriptElement | null;
-      if (!el) {
-        el = document.createElement('script');
-        el.id = ids[i];
-        el.type = 'application/ld+json';
-        document.head.appendChild(el);
-      }
-      el.textContent = JSON.stringify(s);
-    });
-
-    return () => ids.forEach((id) => document.getElementById(id)?.remove());
-  }, [slug, h1, description, neighborhood]);
-}
 
 // ─── FAQ Accordion ───────────────────────────────────────────────────────────
 
@@ -150,33 +73,13 @@ export default function LocationPage() {
   const { slug } = useParams<{ slug: string }>();
   const data = slug ? locations[slug] : undefined;
 
-  useEffect(() => {
-    if (!data) return;
-    document.title = data.metaTitle;
-
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', data.metaDescription);
-
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-    canonical.href = `https://clipandchill.ca/${data.slug}`;
-  }, [data]);
-
-  useLocationSchema(
-    data?.slug ?? '',
-    data?.h1 ?? '',
-    data?.metaDescription ?? '',
-    data?.neighborhood ?? '',
-  );
+  const seoConfig: SeoConfig = {
+    title: data?.metaTitle ?? 'Clip & Chill Barbershop | Mississauga',
+    description: data?.metaDescription ?? 'Premium haircuts and grooming in Mississauga.',
+    path: data ? `/${data.slug}` : '/',
+  };
+  useSeo(seoConfig);
+  useJsonLd('location-ld', data ? locationSchemas(data) : []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -285,7 +188,7 @@ export default function LocationPage() {
 
         {/* Intro + local context */}
         <div className="grid md:grid-cols-2 gap-10 mb-16 md:mb-24">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -298,8 +201,8 @@ export default function LocationPage() {
             <p className="text-white/50 text-sm md:text-base leading-relaxed">
               {data.intro}
             </p>
-          </motion.div>
-          <motion.div
+          </m.div>
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -309,11 +212,11 @@ export default function LocationPage() {
             <p className="text-white/35 text-sm md:text-base leading-relaxed">
               {data.localContext}
             </p>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Highlights */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -327,7 +230,7 @@ export default function LocationPage() {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {data.highlights.map((h, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -337,13 +240,13 @@ export default function LocationPage() {
               >
                 <CheckCircle2 size={16} className="text-gold/70 mt-0.5 shrink-0" />
                 <span className="text-sm text-white/60 leading-relaxed">{h}</span>
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.section>
+        </m.section>
 
         {/* Services & Pricing */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -357,7 +260,7 @@ export default function LocationPage() {
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SERVICES_LIST.map((service, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -370,7 +273,7 @@ export default function LocationPage() {
                   <span className="font-mono text-gold text-sm font-bold">{service.price}</span>
                 </div>
                 <span className="text-[11px] text-white/25 uppercase tracking-[0.2em]">{service.duration}</span>
-              </motion.div>
+              </m.div>
             ))}
           </div>
           <p className="mt-5 text-xs text-white/25">
@@ -384,10 +287,10 @@ export default function LocationPage() {
               getsquire.com
             </a>
           </p>
-        </motion.section>
+        </m.section>
 
         {/* Directions */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -442,7 +345,7 @@ export default function LocationPage() {
               </div>
             ))}
           </div>
-        </motion.section>
+        </m.section>
 
         {/* Reviews */}
         <section className="mb-16 md:mb-24" aria-labelledby="reviews-heading">
@@ -461,7 +364,7 @@ export default function LocationPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {REVIEWS.map((review, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -486,7 +389,7 @@ export default function LocationPage() {
                     <p className="text-[10px] text-white/25">{review.date}</p>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </section>

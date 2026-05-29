@@ -11,8 +11,10 @@ import {
   ExternalLink,
   ChevronDown,
 } from 'lucide-react';
-import { listicles, bestBarberErinMills as fallbackData, type Barbershop, type ListicleData } from '../data/listicles';
+import { listicles, type Barbershop } from '../data/listicles';
 import { trackBookingConversion } from '../analytics';
+import { useSeo, useJsonLd, type SeoConfig } from '../lib/seo';
+import { listicleSchemas } from '../lib/schema';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -40,83 +42,6 @@ function PriceTag({ price }: { price: '$' | '$$' | '$$$' }) {
       ))}
     </span>
   );
-}
-
-// ─── JSON-LD structured data injector ───────────────────────────────────────
-
-function useStructuredData(data: ListicleData) {
-  useEffect(() => {
-    const itemListSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'ItemList',
-      name: data.h1,
-      description: data.metaDescription,
-      numberOfItems: data.shops.length,
-      itemListElement: data.shops.map((shop, idx) => ({
-        '@type': 'ListItem',
-        position: idx + 1,
-        name: shop.name,
-        item: {
-          '@type': 'LocalBusiness',
-          name: shop.name,
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: shop.address.split(',')[0],
-            addressLocality: data.city,
-            addressRegion: 'ON',
-            addressCountry: 'CA',
-          },
-          ...(shop.phone ? { telephone: shop.phone } : {}),
-          aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: shop.rating,
-            reviewCount: shop.reviewCount,
-          },
-          priceRange: shop.priceRange,
-        },
-      })),
-    };
-
-    const faqSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: data.faqs.map((faq) => ({
-        '@type': 'Question',
-        name: faq.question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: faq.answer,
-        },
-      })),
-    };
-
-    const breadcrumbSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://clipandchill.ca/' },
-        { '@type': 'ListItem', position: 2, name: data.h1, item: `https://clipandchill.ca/${data.slug}` },
-      ],
-    };
-
-    const schemas = [itemListSchema, faqSchema, breadcrumbSchema];
-    const scriptIds = schemas.map((_, i) => `listicle-ld-${i}`);
-
-    schemas.forEach((schema, i) => {
-      let el = document.getElementById(scriptIds[i]) as HTMLScriptElement | null;
-      if (!el) {
-        el = document.createElement('script');
-        el.id = scriptIds[i];
-        el.type = 'application/ld+json';
-        document.head.appendChild(el);
-      }
-      el.textContent = JSON.stringify(schema);
-    });
-
-    return () => {
-      scriptIds.forEach((id) => document.getElementById(id)?.remove());
-    };
-  }, [data]);
 }
 
 // ─── ShopCard ────────────────────────────────────────────────────────────────
@@ -333,30 +258,15 @@ export default function ListiclePage() {
   const { slug } = useParams<{ slug: string }>();
   const data = slug ? listicles[slug] : undefined;
 
-  // Set page title + meta description
-  useEffect(() => {
-    if (!data) return;
-    document.title = data.metaTitle;
+  const seoConfig: SeoConfig = {
+    title: data?.metaTitle ?? 'Clip & Chill Barbershop | Mississauga',
+    description: data?.metaDescription ?? 'Premium haircuts and grooming in Mississauga.',
+    path: data ? `/${data.slug}` : '/',
+    type: 'article',
+  };
+  useSeo(seoConfig);
 
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', data.metaDescription);
-
-    // Canonical
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-    canonical.href = `https://clipandchill.ca/${data.slug}`;
-  }, [data]);
-
-  useStructuredData(data ?? fallbackData);
+  useJsonLd('listicle-ld', data ? listicleSchemas(data) : []);
 
   useEffect(() => {
     window.scrollTo(0, 0);

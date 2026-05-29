@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, Clock, Calendar } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 import { trackBookingConversion } from '../analytics';
 import { blogList } from '../data/blogs';
+import { useSeo, useJsonLd } from '../lib/seo';
+import { blogIndexSchemas } from '../lib/schema';
 
 const BOOKING_URL = 'https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services';
 
@@ -30,6 +32,15 @@ function estimateReadTime(slug: string): string {
 
 export default function BlogPage() {
   const [featured, ...rest] = blogList;
+
+  useSeo({
+    title: 'Barbershop & Grooming Blog | Clip & Chill Mississauga',
+    description:
+      'Expert grooming guides, haircut advice, and local barbershop tips from Clip & Chill in Erin Mills, Mississauga — fades, beard care, pricing, and more.',
+    path: '/blog',
+  });
+
+  useJsonLd('blog-index-ld', blogIndexSchemas(blogList));
 
   return (
     <div className="min-h-screen bg-dark">

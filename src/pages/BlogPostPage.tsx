@@ -5,6 +5,8 @@ import ReactMarkdown from 'react-markdown';
 import { Analytics } from '@vercel/analytics/react';
 import { trackBookingConversion } from '../analytics';
 import { blogs } from '../data/blogs';
+import { useSeo, useJsonLd } from '../lib/seo';
+import { blogPostingSchemas } from '../lib/schema';
 
 const BOOKING_URL = 'https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services';
 
@@ -78,13 +80,14 @@ export default function BlogPostPage() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  useEffect(() => {
-    document.title = `${blogMeta.title} | Clip & Chill Barbershop`;
-    const desc = document.querySelector('meta[name="description"]');
-    if (desc) desc.setAttribute('content', blogMeta.description);
-    const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute('href', `https://clipandchill.ca/${slug}`);
-  }, [blogMeta, slug]);
+  useSeo({
+    title: `${blogMeta.title} | Clip & Chill Barbershop`,
+    description: blogMeta.description,
+    path: `/${slug}`,
+    type: 'article',
+  });
+
+  useJsonLd('blog-ld', blogPostingSchemas(blogMeta));
 
   useEffect(() => {
     fetch(`/${slug}.md`)

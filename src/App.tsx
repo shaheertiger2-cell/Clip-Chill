@@ -16,10 +16,11 @@ import {
   CheckCircle2,
   ExternalLink,
 } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import { m, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { trackBookingConversion } from './analytics';
+import { useSeo } from './lib/seo';
 
 const LOCATION_PAGES = [
   { label: 'Barber in Erin Mills', slug: 'barber-erin-mills' },
@@ -176,13 +177,13 @@ const Navbar = () => {
               transition: { duration: 0.8, delay: i * 0.1 + 0.5, ease: [0.16, 1, 0.3, 1] as const },
             };
             return link.href.startsWith('/') ? (
-              <motion.div key={link.name} {...motionProps}>
+              <m.div key={link.name} {...motionProps}>
                 <Link to={link.href} className={className}>{link.name}</Link>
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.a key={link.name} href={link.href} {...motionProps} className={className}>
+              <m.a key={link.name} href={link.href} {...motionProps} className={className}>
                 {link.name}
-              </motion.a>
+              </m.a>
             );
           })}
         </div>
@@ -191,7 +192,7 @@ const Navbar = () => {
         <div className="md:hidden flex-1" />
 
         {/* Center Logo */}
-        <motion.div 
+        <m.div 
           initial={{ opacity: 0, scale: 0.8, y: -20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -205,7 +206,7 @@ const Navbar = () => {
               referrerPolicy="no-referrer"
             />
           </a>
-        </motion.div>
+        </m.div>
 
         {/* Right Side (Desktop Links + Button) */}
         <div className="hidden md:flex flex-1 items-center justify-end gap-12">
@@ -217,16 +218,16 @@ const Navbar = () => {
               transition: { duration: 0.8, delay: i * 0.1 + 0.7, ease: [0.16, 1, 0.3, 1] as const },
             };
             return link.href.startsWith('/') ? (
-              <motion.div key={link.name} {...motionProps}>
+              <m.div key={link.name} {...motionProps}>
                 <Link to={link.href} className={className}>{link.name}</Link>
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.a key={link.name} href={link.href} {...motionProps} className={className}>
+              <m.a key={link.name} href={link.href} {...motionProps} className={className}>
                 {link.name}
-              </motion.a>
+              </m.a>
             );
           })}
-          <motion.a
+          <m.a
             href={bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -237,7 +238,7 @@ const Navbar = () => {
             className="btn-luxury"
           >
             <span>Book Now</span>
-          </motion.a>
+          </m.a>
         </div>
 
         {/* Mobile Toggle (Right) */}
@@ -251,7 +252,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -290,7 +291,7 @@ const Navbar = () => {
                 <span>Book a Haircut</span>
               </a>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </nav>
@@ -317,19 +318,21 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-x-hidden bg-dark">
       {/* Background Image */}
-      <motion.div style={isMobile ? undefined : { y, opacity }} className="absolute inset-0 z-0">
+      <m.div style={isMobile ? undefined : { y, opacity }} className="absolute inset-0 z-0">
         <img
           src="https://i.postimg.cc/wMfhtjbn/DSC04689.jpg"
           alt="Clip & Chill Barbershop interior in Mississauga"
           className="w-full h-full object-cover opacity-40 scale-105"
           referrerPolicy="no-referrer"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/20 to-dark" />
-      </motion.div>
+      </m.div>
 
       <div className="relative z-10 text-center px-8 max-w-5xl w-full">
         <div className="py-20 md:py-0 pb-32 md:pb-0">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -339,19 +342,19 @@ const Hero = () => {
               Barber Shop in<br />
               <span className="italic text-white/40">Erin Mills, Mississauga.</span>
             </h1>
-          </motion.div>
+          </m.div>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="text-white/50 text-base md:text-xl mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed font-light"
           >
             Premium haircuts, skin fades, beard trims &amp; grooming — steps from Erin Mills Town Centre. Walk-ins welcome.
-          </motion.p>
+          </m.p>
 
           {/* Proof bar */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -367,9 +370,9 @@ const Hero = () => {
                 {label}
               </span>
             ))}
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -391,19 +394,19 @@ const Hero = () => {
               See Services
               <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
             </a>
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div 
+      <m.div 
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 3, repeat: Infinity }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-4 opacity-20"
       >
         <span className="text-[8px] uppercase tracking-[0.5em] font-bold">Scroll</span>
         <div className="w-px h-12 bg-gradient-to-b from-gold to-transparent" />
-      </motion.div>
+      </m.div>
     </section>
   );
 };
@@ -422,7 +425,7 @@ const Services = () => {
   ];
 
   const renderServiceItem = (item: (typeof services)[0], idx: number) => (
-    <motion.div
+    <m.div
       key={item.name}
       variants={{
         hidden: {
@@ -444,7 +447,7 @@ const Services = () => {
     >
       <div className="flex justify-between items-baseline mb-2">
         <h4 className="font-serif text-3xl font-medium group-hover:text-gold transition-all duration-700 flex items-center gap-4">
-          <motion.span
+          <m.span
             variants={{
               hidden: { width: 0 },
               visible: { width: '2rem', transition: { delay: 0.5 + idx * 0.1, duration: 0.8 } }
@@ -457,7 +460,7 @@ const Services = () => {
             </Link>
           ) : item.name}
         </h4>
-        <motion.span
+        <m.span
           variants={{
             hidden: { opacity: 0, x: 10 },
             visible: { opacity: 0.6, x: 0, transition: { delay: 0.8 + idx * 0.1 } }
@@ -465,10 +468,10 @@ const Services = () => {
           className="font-mono text-gold text-sm group-hover:opacity-100 transition-opacity duration-700"
         >
           {item.price}
-        </motion.span>
+        </m.span>
       </div>
 
-      <motion.p
+      <m.p
         variants={{
           hidden: { opacity: 0, y: 10 },
           visible: { opacity: 1, y: 0, transition: { delay: 0.6 + idx * 0.1 } }
@@ -476,10 +479,10 @@ const Services = () => {
         className="text-white/30 text-xs mb-4 font-light leading-relaxed max-w-sm group-hover:text-white/60 transition-colors duration-700 pl-12"
       >
         {item.description}
-      </motion.p>
+      </m.p>
 
       <div className="flex items-center gap-4 pl-12">
-        <motion.span
+        <m.span
           variants={{
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { delay: 0.9 + idx * 0.1 } }
@@ -487,8 +490,8 @@ const Services = () => {
           className="text-[9px] uppercase tracking-[0.4em] text-white/20 font-bold group-hover:text-gold/40 transition-colors duration-700"
         >
           {item.time}
-        </motion.span>
-        <motion.div
+        </m.span>
+        <m.div
           variants={{
             hidden: { width: 0 },
             visible: { width: '6rem', transition: { delay: 1 + idx * 0.1, duration: 1 } }
@@ -496,7 +499,7 @@ const Services = () => {
           className="h-px bg-gradient-to-r from-gold/40 to-transparent transition-all duration-1000 group-hover:w-32"
         />
       </div>
-    </motion.div>
+    </m.div>
   );
 
   return (
@@ -515,7 +518,7 @@ const Services = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-32">
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -527,9 +530,9 @@ const Services = () => {
             <div className="space-y-16">
               {services.slice(0, 5).map((item, idx) => renderServiceItem(item, idx))}
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -541,7 +544,7 @@ const Services = () => {
             <div className="space-y-16">
               {services.slice(5).map((item, idx) => renderServiceItem(item, idx))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
@@ -569,7 +572,7 @@ const Gallery = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {images.map((src, i) => (
-            <motion.div 
+            <m.div 
               key={i}
               initial={{ opacity: 0, y: 50, x: i % 2 === 0 ? -20 : 20 }}
               whileInView={{ opacity: 1, y: 0, x: 0 }}
@@ -589,7 +592,7 @@ const Gallery = () => {
                 decoding="async"
                 referrerPolicy="no-referrer"
               />
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -641,7 +644,7 @@ const Team = () => {
         
         <div className="grid md:grid-cols-3 gap-12">
           {barbers.map((barber, i) => (
-            <motion.div 
+            <m.div 
               key={barber.name}
               initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50, y: 20 }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
@@ -663,7 +666,7 @@ const Team = () => {
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <motion.div 
+              <m.div 
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
@@ -676,7 +679,7 @@ const Team = () => {
                 }}
                 className="p-12"
               >
-                <motion.h3 
+                <m.h3 
                   variants={{
                     hidden: { opacity: 0, x: -20 },
                     visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -684,8 +687,8 @@ const Team = () => {
                   className="font-serif text-4xl font-medium mb-4 group-hover:text-gold transition-colors duration-700"
                 >
                   {barber.name}
-                </motion.h3>
-                <motion.p
+                </m.h3>
+                <m.p
                   variants={{
                     hidden: { opacity: 0, x: -20 },
                     visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -693,8 +696,8 @@ const Team = () => {
                   className="text-[10px] uppercase tracking-[0.4em] text-gold/60 font-bold mb-3"
                 >
                   {barber.role}
-                </motion.p>
-                <motion.p
+                </m.p>
+                <m.p
                   variants={{
                     hidden: { opacity: 0, x: -20 },
                     visible: { opacity: 1, x: 0, transition: { duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] } }
@@ -702,9 +705,9 @@ const Team = () => {
                   className="text-[10px] text-white/25 font-light tracking-wide"
                 >
                   {barber.specialty}
-                </motion.p>
-              </motion.div>
-            </motion.div>
+                </m.p>
+              </m.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -746,7 +749,7 @@ const MapSection = () => {
           <h2 className="section-title">The Location</h2>
         </div>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -764,10 +767,10 @@ const MapSection = () => {
             className="opacity-60 group-hover:opacity-100 transition-opacity duration-1000"
           />
           <div className="absolute inset-0 pointer-events-none border border-white/5" />
-        </motion.div>
+        </m.div>
 
         {/* Address / parking / hours info strip */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -796,7 +799,7 @@ const MapSection = () => {
               )}
             </div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -852,15 +855,15 @@ const Reviews = () => {
     <section id="reviews" className="py-24 md:py-40 bg-[#f8f8f8] text-dark relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-8">
         <div className="text-center mb-20">
-          <motion.h2 
+          <m.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="font-serif text-4xl md:text-6xl font-medium tracking-tight mb-6 uppercase"
           >
             What Our Clients Say
-          </motion.h2>
-          <motion.p 
+          </m.h2>
+          <m.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -868,7 +871,7 @@ const Reviews = () => {
             className="text-dark/60 max-w-2xl mx-auto font-light"
           >
             Hear from clients who've experienced the luxury, precision, and service that make Clip & Chill a top choice in Mississauga.
-          </motion.p>
+          </m.p>
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
@@ -893,7 +896,7 @@ const Reviews = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {reviews.map((review, i) => (
-            <motion.div
+            <m.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -926,7 +929,7 @@ const Reviews = () => {
                 </div>
                 <span className="text-xs font-bold text-dark/60">{review.name}</span>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
@@ -972,7 +975,7 @@ const Footer = () => {
           </div>
 
           <div className="grid md:grid-cols-4 gap-12 md:gap-10 w-full pt-24 border-t border-white/5">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -983,8 +986,8 @@ const Footer = () => {
                 <p>4099 Erin Mills Pkwy #4<br />Mississauga, ON L5L 3P9</p>
                 <p>(905) 606-2212</p>
               </div>
-            </motion.div>
-            <motion.div
+            </m.div>
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -995,8 +998,8 @@ const Footer = () => {
                 <p>Mon - Sat: 10:00 - 20:00</p>
                 <p>Sunday: 11:00 - 19:00</p>
               </div>
-            </motion.div>
-            <motion.div
+            </m.div>
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1015,8 +1018,8 @@ const Footer = () => {
                   </li>
                 ))}
               </ul>
-            </motion.div>
-            <motion.div
+            </m.div>
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1035,7 +1038,7 @@ const Footer = () => {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </m.div>
           </div>
         </div>
 
@@ -1077,6 +1080,13 @@ const MobileStickyBook = () => {
 
 
 export default function App() {
+  useSeo({
+    title: 'Clip & Chill Barbershop | Premium Haircuts & Grooming in Mississauga',
+    description:
+      'Clip & Chill Barbershop in Mississauga offers premium haircuts, beard trims, hot towel shaves, facials, waxing, threading, and full grooming packages. Book your appointment today.',
+    path: '/',
+  });
+
   return (
     <div className="min-h-screen bg-dark">
       <Navbar />
@@ -1086,7 +1096,7 @@ export default function App() {
 
       <section id="about" className="py-24 md:py-40 bg-dark relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-16 md:gap-32 items-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -1103,9 +1113,9 @@ export default function App() {
                 className="w-full h-full border-0"
               />
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -1117,7 +1127,7 @@ export default function App() {
               }
             }}
           >
-            <motion.span
+            <m.span
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -1125,8 +1135,8 @@ export default function App() {
               className="sub-label"
             >
               Our Story
-            </motion.span>
-            <motion.h2
+            </m.span>
+            <m.h2
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -1134,8 +1144,8 @@ export default function App() {
               className="section-title mb-10"
             >
               Classic Style, <br /><span className="italic text-white/40">Modern Cuts.</span>
-            </motion.h2>
-            <motion.p
+            </m.h2>
+            <m.p
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -1143,8 +1153,8 @@ export default function App() {
               className="text-white/50 text-lg mb-6 leading-relaxed font-light"
             >
               We're at <strong className="text-white/70 font-medium">4099 Erin Mills Pkwy #4</strong>, Mississauga — two minutes from Erin Mills Town Centre with free parking right out front. Clip &amp; Chill is Erin Mills' most-reviewed barbershop, with a perfect 5.0 rating across 406+ Google reviews.
-            </motion.p>
-            <motion.p
+            </m.p>
+            <m.p
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -1152,10 +1162,10 @@ export default function App() {
               className="text-white/30 mb-8 leading-relaxed font-light"
             >
               Our three senior barbers specialise in precision fades, beard sculpting, hot towel shaves, and classic cuts — serving everyone from kids getting their first cut to regulars who drive across Mississauga for the consistency.
-            </motion.p>
+            </m.p>
 
             {/* Trust chips */}
-            <motion.div
+            <m.div
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -1168,10 +1178,10 @@ export default function App() {
                   {chip}
                 </span>
               ))}
-            </motion.div>
+            </m.div>
 
             {/* Action Buttons */}
-            <motion.div
+            <m.div
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -1204,10 +1214,10 @@ export default function App() {
                 <MapPin size={16} />
                 Get Directions
               </a>
-            </motion.div>
+            </m.div>
 
             {/* Social Media Icons */}
-            <motion.div
+            <m.div
               variants={{
                 hidden: { opacity: 0, x: 50 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -1240,8 +1250,8 @@ export default function App() {
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.35 8.35 0 0 0 4.76 1.49v-3.5a4.85 4.85 0 0 1-1-.01z"/>
                 </svg>
               </a>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </section>
 
@@ -1265,7 +1275,7 @@ export default function App() {
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto px-8 text-center">
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -1277,7 +1287,7 @@ export default function App() {
               }
             }}
           >
-            <motion.h2 
+            <m.h2 
               variants={{
                 hidden: { opacity: 0, y: 50 },
                 visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
@@ -1285,8 +1295,8 @@ export default function App() {
               className="section-title mb-10"
             >
               Ready for a <br />Fresh Cut?
-            </motion.h2>
-            <motion.p 
+            </m.h2>
+            <m.p 
               variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
@@ -1294,8 +1304,8 @@ export default function App() {
               className="text-white/40 text-lg mb-16 font-light"
             >
               Join the many clients who trust us for their regular haircuts.
-            </motion.p>
-            <motion.div
+            </m.p>
+            <m.div
               variants={{
                 hidden: { opacity: 0, scale: 0.9 },
                 visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
@@ -1310,8 +1320,8 @@ export default function App() {
               >
                 <span>Book Your Appointment</span>
               </a>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </section>
 

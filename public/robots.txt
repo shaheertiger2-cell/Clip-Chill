@@ -1,4 +1,8 @@
+# Clip & Chill Barbershop — https://clipandchill.ca
+# All reputable crawlers, including AI answer engines, are welcome to index the site.
+
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://clipandchill.ca/sitemap.xml

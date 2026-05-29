@@ -13,11 +13,28 @@
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="format-detection" content="telephone=no" />
 
     <!-- Preconnect to speed up external resource loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://i.postimg.cc" />
+    <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://getsquire.com" />
+
+    <!-- Fonts: loaded via <link> (non-blocking, parallel) instead of CSS @import -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap"
+    />
+
+    <!-- Preload the hero LCP image so it starts downloading immediately -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://i.postimg.cc/wMfhtjbn/DSC04689.jpg"
+      fetchpriority="high"
+    />
 
     <!-- Primary Meta Tags -->
     <title>Clip & Chill Barbershop | Premium Haircuts & Grooming in Mississauga</title>
@@ -32,6 +49,7 @@
     <meta property="og:title" content="Clip & Chill Barbershop | Premium Haircuts & Grooming in Mississauga" />
     <meta property="og:description" content="A modern barbershop focused on quality haircuts, beard trims, hot towel shaves, facials, and full grooming packages. 5-star rated with 406+ reviews." />
     <meta property="og:image" content="https://i.postimg.cc/gJWNVrk0/Company_logo_page_0001.jpg" />
+    <meta property="og:image:alt" content="Clip & Chill Barbershop logo" />
     <meta property="og:url" content="https://clipandchill.ca/" />
     <meta property="og:site_name" content="Clip & Chill Barbershop" />
     <meta property="og:locale" content="en_CA" />
@@ -47,6 +65,7 @@
     <meta name="twitter:title" content="Clip & Chill Barbershop | Premium Haircuts & Grooming" />
     <meta name="twitter:description" content="Premium haircuts, beard trims, hot towel shaves, facials, and full grooming packages in Mississauga. 5-star rated." />
     <meta name="twitter:image" content="https://i.postimg.cc/gJWNVrk0/Company_logo_page_0001.jpg" />
+    <meta name="twitter:image:alt" content="Clip & Chill Barbershop logo" />
 
     <!-- Geo Tags -->
     <meta name="geo.region" content="CA-ON" />
@@ -213,6 +232,22 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>Clip &amp; Chill Barbershop — Premium Haircuts &amp; Grooming in Mississauga</h1>
+      <p>
+        Clip &amp; Chill is Erin Mills' most-reviewed barbershop, offering haircuts, skin fades,
+        beard trims, hot towel shaves, facials, waxing, and threading. 5.0 rating across 406+ Google reviews.
+      </p>
+      <p>
+        <strong>Address:</strong> 4099 Erin Mills Pkwy #4, Mississauga, ON L5L 3P9<br />
+        <strong>Phone:</strong> <a href="tel:+19056062212">(905) 606-2212</a><br />
+        <strong>Hours:</strong> Mon–Sat 10am–8pm · Sun 11am–7pm
+      </p>
+      <p>
+        <a href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services">Book an appointment online</a>
+      </p>
+      <p>Please enable JavaScript for the full Clip &amp; Chill experience.</p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

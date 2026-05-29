@@ -1,17 +1,26 @@
-import { StrictMode, Component, type ReactNode } from 'react';
+import { StrictMode, Component, Suspense, lazy, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
+import { LazyMotion, domAnimation } from 'motion/react';
 import App from './App.tsx';
-import BlogPage from './pages/BlogPage.tsx';
-import BlogPostPage from './pages/BlogPostPage.tsx';
-import ListiclePage from './pages/ListiclePage.tsx';
-import ServicePage from './pages/ServicePage.tsx';
-import LocationPage from './pages/LocationPage.tsx';
 import { listicles } from './data/listicles.ts';
 import { services } from './data/services.ts';
 import { locations } from './data/locations.ts';
 import { blogs } from './data/blogs.ts';
 import './index.css';
+
+// Homepage (App) stays eager for fast first paint / LCP. The secondary routes
+// are code-split so their code — and heavier deps like react-markdown — stays
+// out of the initial bundle.
+const BlogPage = lazy(() => import('./pages/BlogPage.tsx'));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage.tsx'));
+const ListiclePage = lazy(() => import('./pages/ListiclePage.tsx'));
+const ServicePage = lazy(() => import('./pages/ServicePage.tsx'));
+const LocationPage = lazy(() => import('./pages/LocationPage.tsx'));
+
+function RouteFallback() {
+  return <div style={{ minHeight: '100vh', background: '#0a0a0a' }} aria-hidden="true" />;
+}
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null };
@@ -47,13 +56,17 @@ function SlugRouter() {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/:slug" element={<SlugRouter />} />
-        </Routes>
-      </BrowserRouter>
+      <LazyMotion features={domAnimation} strict>
+        <BrowserRouter>
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/:slug" element={<SlugRouter />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </LazyMotion>
     </ErrorBoundary>
   </StrictMode>,
 );
