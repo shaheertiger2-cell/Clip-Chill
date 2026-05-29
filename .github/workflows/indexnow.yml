@@ -1,0 +1,30 @@
+name: IndexNow Submit
+
+# Submits all sitemap URLs to IndexNow after a production deploy succeeds, so
+# search engines (Bing, Yandex, …) are notified the moment new/updated content
+# is actually live — including the verification key file the deploy ships.
+#
+# Triggered by the GitHub "deployment_status" event that Vercel emits. We only
+# act on a successful *Production* deployment (not preview builds).
+
+on:
+  deployment_status:
+
+jobs:
+  submit:
+    if: >-
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment_status.environment == 'Production'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # scripts/indexnow.mjs reads public/sitemap.xml and POSTs to
+      # api.indexnow.org using only Node built-ins (global fetch + fs), so no
+      # dependency install is needed.
+      - name: Submit URLs to IndexNow
+        run: node scripts/indexnow.mjs
