@@ -26,6 +26,21 @@ function estimateReadTime(slug: string): string {
     'beard-trim-guide': '5 min read',
     'barber-shop-near-erin-mills-town-centre': '4 min read',
     'mens-haircut-cost-mississauga': '5 min read',
+    'how-to-ask-for-a-haircut': '7 min read',
+    'clipper-guard-sizes-explained': '7 min read',
+    'mens-hair-types-guide': '7 min read',
+    'curly-hair-mens-haircut-guide': '7 min read',
+    'best-haircuts-receding-hairline': '7 min read',
+    'how-to-style-mens-hair-at-home': '8 min read',
+    'beard-styles-face-shape': '7 min read',
+    'how-to-fix-a-patchy-beard': '7 min read',
+    'hot-towel-shave-what-to-expect': '7 min read',
+    'kids-first-haircut-guide': '7 min read',
+    'groom-wedding-haircut-timeline': '7 min read',
+    'barbershop-tipping-etiquette-ontario': '7 min read',
+    'barber-vs-hair-salon': '6 min read',
+    'winter-grooming-guide-mississauga': '7 min read',
+    'haircut-for-job-interview': '7 min read',
   };
   return times[slug] ?? '5 min read';
 }
