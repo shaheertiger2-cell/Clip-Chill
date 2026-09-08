@@ -41,6 +41,21 @@ function estimateReadTime(slug: string): string {
     'barber-vs-hair-salon': '6 min read',
     'winter-grooming-guide-mississauga': '7 min read',
     'haircut-for-job-interview': '7 min read',
+    'barbershop-open-sunday-mississauga': '6 min read',
+    'best-time-to-visit-barbershop-mississauga': '6 min read',
+    'walk-in-vs-appointment-mississauga': '6 min read',
+    'student-haircut-guide-utm-sheridan': '7 min read',
+    'new-to-mississauga-finding-a-barber': '7 min read',
+    'beard-trim-cost-mississauga': '6 min read',
+    'kids-haircut-mississauga-parent-guide': '7 min read',
+    'back-to-school-haircut-mississauga': '6 min read',
+    'summer-grooming-mississauga': '7 min read',
+    'getting-to-clip-and-chill-erin-mills': '6 min read',
+    'prom-haircut-guide-mississauga': '7 min read',
+    'chain-vs-independent-barber-mississauga': '6 min read',
+    'commuter-haircut-guide-mississauga': '6 min read',
+    'mississauga-mens-grooming-calendar': '7 min read',
+    'first-visit-what-to-expect-clip-and-chill': '7 min read',
   };
   return times[slug] ?? '5 min read';
 }
