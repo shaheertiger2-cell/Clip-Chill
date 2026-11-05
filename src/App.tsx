@@ -644,7 +644,7 @@ const Team = () => {
   const barbers = [
     {
       name: "Ahmad",
-      role: "Owner & Master Barber",
+      role: "Master Barber",
       specialty: "Beard Sculpting · Precision Fades",
       image: "/team/ahmad.webp"
     },
@@ -669,7 +669,7 @@ const Team = () => {
           <div>
             <span className="sub-label">The Experts</span>
             <h2 className="section-title mb-4">Our Barbers</h2>
-            <p className="text-white/30 font-light max-w-md">Led by owner Ahmad, our three barbers each bring deep expertise in cuts, fades, and grooming. Every client gets a proper consultation before the scissors come out.</p>
+            <p className="text-white/30 font-light max-w-md">Our three barbers each bring deep expertise in cuts, fades, and grooming. Every client gets a proper consultation before the scissors come out.</p>
           </div>
           <a
             href="https://getsquire.com/discover/barbershop/clip-and-chill-mississauga#services"
